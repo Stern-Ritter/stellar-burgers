@@ -5,7 +5,13 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 
 class App extends React.Component {
-
+    render() {
+        return (
+            <main>
+                <AppHeader></AppHeader>
+            </main>
+        );
+    }
 }
 
 export default App;

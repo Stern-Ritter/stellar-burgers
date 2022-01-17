@@ -21,7 +21,7 @@ class BurgerIngredients extends React.Component {
 
   render() {
     return (
-      <section className={styles.section + " pt-10"}>
+      <section className=" pt-10">
         <h1 className={styles.title + " text text_type_main-large pb-5"}>Соберите бургер</h1>
         <div className={styles.tabs + " pb-10"}>
           <Tab value="bun" active={this.state.current === "bun"} onClick={this.setCurrent}>

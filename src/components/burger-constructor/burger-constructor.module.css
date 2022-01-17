@@ -12,14 +12,14 @@
   max-height: 620px;
 }
 
-.ingredients {
-  height: 70%;
-  overflow-y: auto;
-}
-
 .bun {
   display: flex;
   justify-content: end;
+}
+
+.ingredients {
+  height: 70%;
+  overflow-y: auto;
 }
 
 .ingredient {

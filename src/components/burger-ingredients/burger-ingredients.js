@@ -1,5 +1,6 @@
 import React from "react";
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import { dataPropTypes } from "../../utils/data"
 import styles from "./burger-ingredients.module.css";
 
 class BurgerIngredients extends React.Component {
@@ -24,15 +25,9 @@ class BurgerIngredients extends React.Component {
       <section className=" pt-10">
         <h1 className={styles.title + " text text_type_main-large pb-5"}>Соберите бургер</h1>
         <div className={styles.tabs + " pb-10"}>
-          <Tab value="bun" active={this.state.current === "bun"} onClick={this.setCurrent}>
-            Булки
-          </Tab>
-          <Tab value="sauce" active={this.state.current === "sauce"} onClick={this.setCurrent}>
-            Соусы
-          </Tab>
-          <Tab value="main" active={this.state.current === "main"} onClick={this.setCurrent}>
-            Начинки
-          </Tab>
+          <Tab value="bun" active={this.state.current === "bun"} onClick={this.setCurrent}>Булки</Tab>
+          <Tab value="sauce" active={this.state.current === "sauce"} onClick={this.setCurrent}>Соусы</Tab>
+          <Tab value="main" active={this.state.current === "main"} onClick={this.setCurrent}>Начинки</Tab>
         </div>
         <ul className={styles.categories}>
           {this.props.data
@@ -70,6 +65,10 @@ class BurgerIngredients extends React.Component {
       </section>
     );
   }
+}
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(dataPropTypes.isRequired).isRequired
 }
 
 export default BurgerIngredients;

@@ -1,0 +1,40 @@
+.list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.constructor {
+  composes: list;
+  max-height: 620px;
+}
+
+.bun {
+  display: flex;
+  justify-content: end;
+}
+
+.ingredients {
+  height: 70%;
+  overflow-y: auto;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.purchase {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+}

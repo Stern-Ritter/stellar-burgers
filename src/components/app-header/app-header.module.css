@@ -1,0 +1,28 @@
+.header {
+  background-color: #1c1c21;
+}
+
+.menu {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-item {
+  display: flex;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  color: #F2F2F3;
+  text-decoration: none;
+}

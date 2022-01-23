@@ -6,7 +6,7 @@ import styles from "./burger-constructor.module.css";
 
 function BurgerConstructor(props) {
   const [state, setState] = React.useState({
-    bun: "60666c42cc7b410027a1a9b1",
+    bun: "60d3b41abdacab0026a733c6",
   });
 
   return (

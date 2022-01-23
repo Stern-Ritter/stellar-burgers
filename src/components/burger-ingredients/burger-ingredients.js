@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
 import { dataPropTypes } from "../../utils/api";
 import styles from "./burger-ingredients.module.css";
 
@@ -16,6 +17,16 @@ function BurgerIngredients(props) {
 
   const setCurrent = (value) => {
     setState({ ...state, current: value });
+  };
+
+  const [visible, setVisible] = React.useState(false);
+
+  const openHandler = () => {
+    setVisible(true);
+  };
+
+  const closeHandler = (evt) => {
+    setVisible(false);
   };
 
   return (
@@ -39,7 +50,7 @@ function BurgerIngredients(props) {
                     .filter((ingredient) => ingredient.type === type)
                     .map((ingredient, idx) => {
                       return (
-                        <li className={styles.ingredient} key={ingredient._id}>
+                        <li className={styles.ingredient} key={ingredient._id} onClick={openHandler}>
                           <img
                             className={styles.image + " pl-4 pr-4 mb-1"}
                             alt={ingredient.name}
@@ -59,6 +70,7 @@ function BurgerIngredients(props) {
             );
           })}
       </ul>
+      <Modal visible={visible} closeHandler={closeHandler}></Modal>
     </section>
   );
 }

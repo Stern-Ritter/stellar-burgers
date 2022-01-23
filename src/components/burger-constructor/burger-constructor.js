@@ -20,7 +20,7 @@ function BurgerConstructor(props) {
     setVisible(true);
   };
 
-  const closeHandler = (evt) => {
+  const closeHandler = () => {
     setVisible(false);
   };
 

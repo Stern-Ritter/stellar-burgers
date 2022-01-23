@@ -2,30 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 import { dataPropTypes } from "../../utils/api";
 import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients(props) {
-  const [state, setState] = React.useState({
-    current: "bun",
-    categories: {
-      bun: "Булки",
-      sauce: "Соусы",
-      main: "Начинки",
-    },
+  const [ categories ] = React.useState({
+    bun: "Булки",
+    sauce: "Соусы",
+    main: "Начинки",
   });
+  const [ currentCategory, setCurrentCategory ] = React.useState("bun");
+  const [ visible, setVisible ] = React.useState(false);
+  const [ selectedIngredient, setSelectedIngredient ] = React.useState(null);
 
-  const setCurrent = (value) => {
-    setState({ ...state, current: value });
-  };
-
-  const [visible, setVisible] = React.useState(false);
-
-  const openHandler = () => {
+  const openHandler = (id) => {
     setVisible(true);
+    setSelectedIngredient(id);
   };
 
-  const closeHandler = (evt) => {
+  const closeHandler = () => {
     setVisible(false);
   };
 
@@ -33,9 +29,9 @@ function BurgerIngredients(props) {
     <section className=" pt-10">
       <h1 className={styles.title + " text text_type_main-large pb-5"}>Соберите бургер</h1>
       <div className={styles.tabs + " pb-10"}>
-        <Tab value="bun" active={state.current === "bun"} onClick={setCurrent}>Булки</Tab>
-        <Tab value="sauce" active={state.current === "sauce"} onClick={setCurrent}>Соусы</Tab>
-        <Tab value="main" active={state.current === "main"} onClick={setCurrent}>Начинки</Tab>
+        <Tab value="bun" active={currentCategory === "bun"} onClick={setCurrentCategory}>Булки</Tab>
+        <Tab value="sauce" active={currentCategory === "sauce"} onClick={setCurrentCategory}>Соусы</Tab>
+        <Tab value="main" active={currentCategory === "main"} onClick={setCurrentCategory}>Начинки</Tab>
       </div>
       <ul className={styles.categories}>
         {props.data
@@ -44,13 +40,13 @@ function BurgerIngredients(props) {
           .map((type) => {
             return (
               <li key={type}>
-                <h2 className="text text_type_main-medium">{state.categories[type]}</h2>
+                <h2 className="text text_type_main-medium">{categories[type]}</h2>
                 <ul className={styles.ingredients + " pl-4 pr-4 pt-6 pb-10"}>
                   {props.data
                     .filter((ingredient) => ingredient.type === type)
                     .map((ingredient, idx) => {
                       return (
-                        <li className={styles.ingredient} key={ingredient._id} onClick={openHandler}>
+                        <li className={styles.ingredient} key={ingredient._id} onClick={ () => openHandler(ingredient._id)}>
                           <img
                             className={styles.image + " pl-4 pr-4 mb-1"}
                             alt={ingredient.name}
@@ -71,7 +67,12 @@ function BurgerIngredients(props) {
           })}
       </ul>
       {
-        visible && <Modal closeHandler={closeHandler}>Ингредиент</Modal>
+        visible && <Modal closeHandler={closeHandler}>
+          <IngredientDetails
+            title="Детали ингредиента"
+            ingredient={props.data.find((ingredient) => ingredient._id === selectedIngredient)}>
+          </IngredientDetails>
+        </Modal>
       }
     </section>
   );

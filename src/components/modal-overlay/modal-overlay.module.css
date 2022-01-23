@@ -4,19 +4,6 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 99;
-  transition: visibility 0s, opacity 0.3s linear;
+  z-index: 100;
   background: rgba(0, 0, 0, 0.6);
-}
-
-.overlay_hidden {
-  composes: overlay;
-  visibility: hidden;
-  opacity: 0;
-}
-
-.overlay_shown {
-  composes: overlay;
-  visibility: visible;
-  opacity: 1;
 }

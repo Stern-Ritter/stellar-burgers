@@ -70,7 +70,9 @@ function BurgerIngredients(props) {
             );
           })}
       </ul>
-      <Modal visible={visible} closeHandler={closeHandler}></Modal>
+      {
+        visible && <Modal closeHandler={closeHandler}>Ингредиент</Modal>
+      }
     </section>
   );
 }

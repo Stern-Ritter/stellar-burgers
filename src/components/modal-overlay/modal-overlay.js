@@ -10,7 +10,7 @@ function ModalOverlay(props) {
 
   return (
     <div
-      className={props.visible ? styles.overlay_shown : styles.overlay_hidden}
+      className={styles.overlay}
       ref={overlay}
       onClick={ closeModalOnClick }
     >

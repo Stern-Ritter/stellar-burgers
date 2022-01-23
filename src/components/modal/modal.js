@@ -21,7 +21,7 @@ function Modal(props) {
   }, []);
 
   return ReactDOM.createPortal(
-    <ModalOverlay visible={props.visible} closeHandler={props.closeHandler}>
+    <ModalOverlay closeHandler={props.closeHandler}>
       <div className={styles.modal}>
         <button
           className={styles["modal__close"]}

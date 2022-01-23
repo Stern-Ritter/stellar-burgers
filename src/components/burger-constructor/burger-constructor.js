@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
 import { dataPropTypes } from "../../utils/api";
 import styles from "./burger-constructor.module.css";
 
@@ -8,6 +9,20 @@ function BurgerConstructor(props) {
   const [state, setState] = React.useState({
     bun: "60d3b41abdacab0026a733c6",
   });
+
+  const setCurrent = (value) => {
+    setState({ ...state, current: value });
+  };
+
+  const [visible, setVisible] = React.useState(false);
+
+  const openHandler = () => {
+    setVisible(true);
+  };
+
+  const closeHandler = (evt) => {
+    setVisible(false);
+  };
 
   return (
     <section className="pt-25 pb-13">
@@ -62,10 +77,13 @@ function BurgerConstructor(props) {
           <p className="text text_type_digits-medium mr-2">610</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={openHandler}>
           Оформить заказ
         </Button>
       </div>
+      {
+        visible && <Modal closeHandler={closeHandler}>Заказ</Modal>
+      }
     </section>
   );
 }

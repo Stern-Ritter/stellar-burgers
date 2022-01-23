@@ -2,18 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 import { dataPropTypes } from "../../utils/api";
 import styles from "./burger-constructor.module.css";
 
 function BurgerConstructor(props) {
-  const [state, setState] = React.useState({
-    bun: "60d3b41abdacab0026a733c6",
-  });
-
-  const setCurrent = (value) => {
-    setState({ ...state, current: value });
-  };
-
+  const [bun, setBun] = React.useState("60d3b41abdacab0026a733c6");
+  const [order, setOrder] = React.useState({ id: '034536' });
   const [visible, setVisible] = React.useState(false);
 
   const openHandler = () => {
@@ -28,7 +23,7 @@ function BurgerConstructor(props) {
     <section className="pt-25 pb-13">
       <ul className={styles.constructor}>
         {props.data
-          .filter((el) => el._id === state.bun)
+          .filter((el) => el._id === bun)
           .map((ingredient) => {
             return (
               <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
@@ -57,7 +52,7 @@ function BurgerConstructor(props) {
           </ul>
         </li>
         {props.data
-          .filter((el) => el._id === state.bun)
+          .filter((el) => el._id === bun)
           .map((ingredient) => {
             return (
               <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
@@ -82,7 +77,9 @@ function BurgerConstructor(props) {
         </Button>
       </div>
       {
-        visible && <Modal closeHandler={closeHandler}>Заказ</Modal>
+        visible && <Modal closeHandler={closeHandler}>
+          <OrderDetails order={order}></OrderDetails>
+        </Modal>
       }
     </section>
   );

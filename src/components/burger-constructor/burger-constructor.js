@@ -1,22 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { useState } from "react";
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { dataPropTypes } from "../../utils/api";
 import styles from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
 
 function BurgerConstructor(props) {
-  const [bun, setBun] = React.useState("60d3b41abdacab0026a733c6");
-  const [order, setOrder] = React.useState({ id: '034536' });
-  const [visible, setVisible] = React.useState(false);
+  const [bun, setBun] = useState("60d3b41abdacab0026a733c6");
+  const [order, setOrder] = useState({ id: '034536' });
+  const [visibleModal, setVisibleModal] = useState(false);
 
   const openHandler = () => {
-    setVisible(true);
+    setVisibleModal(true);
   };
 
   const closeHandler = () => {
-    setVisible(false);
+    setVisibleModal(false);
   };
 
   return (
@@ -77,7 +77,7 @@ function BurgerConstructor(props) {
         </Button>
       </div>
       {
-        visible && <Modal closeHandler={closeHandler}>
+        visibleModal && <Modal closeHandler={closeHandler}>
           <OrderDetails order={order}></OrderDetails>
         </Modal>
       }

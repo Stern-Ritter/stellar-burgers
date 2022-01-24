@@ -2,10 +2,7 @@ import styles from "./ingredient-details.module.css";
 
 function IngredientDetails(props) {
   return (
-    <div className={styles.details + " pl-10 pr-10 pt-10 pb-15"}>
-      <h2 className={styles.title + " text text_type_main-large pt-3 pb-3"}>
-        {props.title}
-      </h2>
+    <div className={styles.details + " pl-10 pr-10 pb-15"}>
       <img
         className={styles.image + " mb-4"}
         alt={props.ingredient.name}

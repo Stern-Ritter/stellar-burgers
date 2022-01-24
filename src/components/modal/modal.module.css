@@ -12,7 +12,12 @@
   position: relative;
 }
 
-.modal__close {
+.title {
+  margin: 0;
+  line-height: 1.77;
+}
+
+.close {
   position: absolute;
   top: 60px;
   right: 40px;
@@ -23,6 +28,6 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-.modal__close:hover {
+.close:hover {
   opacity: 0.6;
 }

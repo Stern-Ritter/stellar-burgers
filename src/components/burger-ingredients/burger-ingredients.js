@@ -67,9 +67,8 @@ function BurgerIngredients(props) {
           })}
       </ul>
       {
-        visible && <Modal closeHandler={closeHandler}>
+        visible && <Modal title="Детали ингредиента" closeHandler={closeHandler}>
           <IngredientDetails
-            title="Детали ингредиента"
             ingredient={props.data.find((ingredient) => ingredient._id === selectedIngredient)}>
           </IngredientDetails>
         </Modal>

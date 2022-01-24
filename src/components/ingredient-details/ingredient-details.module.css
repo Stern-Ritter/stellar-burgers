@@ -20,6 +20,7 @@
 }
 
 .nutrient {
+  min-width: 112px;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,28 +1,28 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { useState } from "react";
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { dataPropTypes } from "../../utils/api";
 import styles from "./burger-ingredients.module.css";
+import PropTypes from "prop-types";
 
 function BurgerIngredients(props) {
-  const [ categories ] = React.useState({
+  const [ categories ] = useState({
     bun: "Булки",
     sauce: "Соусы",
     main: "Начинки",
   });
-  const [ currentCategory, setCurrentCategory ] = React.useState("bun");
-  const [ visible, setVisible ] = React.useState(false);
-  const [ selectedIngredient, setSelectedIngredient ] = React.useState(null);
+  const [ currentCategory, setCurrentCategory ] = useState("bun");
+  const [ selectedIngredient, setSelectedIngredient ] = useState(null);
+  const [ visibleModal, setVisibleModal ] = useState(false);
 
   const openHandler = (id) => {
-    setVisible(true);
+    setVisibleModal(true);
     setSelectedIngredient(id);
   };
 
   const closeHandler = () => {
-    setVisible(false);
+    setVisibleModal(false);
   };
 
   return (
@@ -67,7 +67,7 @@ function BurgerIngredients(props) {
           })}
       </ul>
       {
-        visible && <Modal title="Детали ингредиента" closeHandler={closeHandler}>
+        visibleModal && <Modal title="Детали ингредиента" closeHandler={closeHandler}>
           <IngredientDetails
             ingredient={props.data.find((ingredient) => ingredient._id === selectedIngredient)}>
           </IngredientDetails>

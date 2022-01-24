@@ -1,4 +1,4 @@
-# Проект: React-burger
+# Проект: Stellar Burgers
 
 ### Описание проекта
 Stellar Burgers — приложением космической бургерной.

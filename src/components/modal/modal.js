@@ -1,11 +1,13 @@
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
-import { useEffect } from "react";
+import PropTypes from "prop-types";
+
+const modal = document.getElementById("react-modals");
 
 function Modal(props) {
-  const modal = document.getElementById("react-modals");
 
   const closeModalOnEsc = (evt) => {
     if (evt.key === "Escape") {
@@ -43,6 +45,11 @@ function Modal(props) {
     </ModalOverlay>,
     modal
   );
+}
+
+Modal.propTypes = {
+  title: PropTypes.string,
+  closeHandler: PropTypes.func.isRequired
 }
 
 export default Modal;

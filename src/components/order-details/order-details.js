@@ -18,7 +18,7 @@ function OrderDetails(props) {
 }
 
 const order = PropTypes.shape({
-  id: PropTypes.number.isRequired
+  id: PropTypes.string.isRequired
 });
 
 OrderDetails.propTypes = {

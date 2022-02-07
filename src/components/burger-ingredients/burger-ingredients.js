@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
+import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { dataPropTypes } from "../../utils/api";
 import styles from "./burger-ingredients.module.css";
@@ -44,23 +45,8 @@ function BurgerIngredients(props) {
                 <ul className={styles.ingredients + " pl-4 pr-4 pt-6 pb-10"}>
                   {props.data
                     .filter((ingredient) => ingredient.type === type)
-                    .map((ingredient, idx) => {
-                      return (
-                        <li className={styles.ingredient} key={ingredient._id} onClick={ () => openHandler(ingredient._id)}>
-                          <img
-                            className={styles.image + " pl-4 pr-4 mb-1"}
-                            alt={ingredient.name}
-                            src={ingredient.image}
-                          />
-                          <div className={styles.price + " mb-2"}>
-                            <p className="text text_type_digits-default mr-2">{ingredient.price}</p>
-                            <CurrencyIcon type="primary" />
-                          </div>
-                          <p className="text text_type_main-default mb-6">{ingredient.name}</p>
-                          {(idx + 1) % 3 === 0 && <Counter count={1} size="default" />}
-                        </li>
-                      );
-                    })}
+                    .map((ingredient) => (<BurgerIngredient ingredient={ingredient} openHandler={openHandler}/>))
+                  }
                 </ul>
               </li>
             );

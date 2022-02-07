@@ -41,9 +41,9 @@ function BurgerConstructor(props) {
           <ul className={styles.list}>
             {props.data
               .filter((el) => el.type === "main" || el.type === "sauce")
-              .map((ingredient) => {
+              .map((ingredient, idx) => {
                 return (
-                  <li className={styles.ingredient + " pl-2 pr-2"} key={ingredient._id}>
+                  <li className={styles.ingredient + " pl-2 pr-2"} key={idx}>
                     <DragIcon type="primary" />
                     <ConstructorElement text={ingredient.name} price={ingredient.price} thumbnail={ingredient.image} />
                   </li>

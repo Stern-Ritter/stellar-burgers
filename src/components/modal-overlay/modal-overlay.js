@@ -2,20 +2,16 @@ import React from "react";
 import styles from "./modal-overlay.module.css";
 import PropTypes from "prop-types";
 
-function ModalOverlay(props) {
+function ModalOverlay({ closeHandler }) {
   const overlay = React.useRef(null);
 
   const closeModalOnClick = (evt) => {
     if (evt.target === overlay.current) {
-      props.closeHandler();
+      closeHandler();
     }
   };
 
-  return (
-    <div className={styles.overlay} ref={overlay} onClick={closeModalOnClick}>
-      {props.children}
-    </div>
-  );
+  return (<div className={styles.overlay} ref={overlay} onClick={closeModalOnClick}></div>);
 }
 
 ModalOverlay.propTypes = {

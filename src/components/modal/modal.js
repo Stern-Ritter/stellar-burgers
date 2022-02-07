@@ -23,33 +23,32 @@ function Modal(props) {
   }, []);
 
   return ReactDOM.createPortal(
-    <ModalOverlay closeHandler={props.closeHandler}>
-      <div className={styles.modal}>
-      { props.title && (
+    <>
+    <div className={styles.modal}>
+      {props.title && (
         <h2 className={styles.title + " text text_type_main-large pl-10 pr-10 pt-10 pb-3"}>
           {props.title}
         </h2>
-        )
-      }
-        <button
-          className={styles.close}
-          type="button"
-          title="Закрыть"
-          onClick={props.closeHandler}
-        >
-          <CloseIcon type="primary" />
-        </button>
-        {props.children}
-      </div>
-      ,
-    </ModalOverlay>,
+      )}
+      <button
+        className={styles.close}
+        type="button"
+        title="Закрыть"
+        onClick={props.closeHandler}
+      >
+        <CloseIcon type="primary" />
+      </button>
+      {props.children}
+    </div>
+    <ModalOverlay closeHandler={props.closeHandler}></ModalOverlay>
+    </>,
     modal
   );
 }
 
 Modal.propTypes = {
   title: PropTypes.string,
-  closeHandler: PropTypes.func.isRequired
-}
+  closeHandler: PropTypes.func.isRequired,
+};
 
 export default Modal;

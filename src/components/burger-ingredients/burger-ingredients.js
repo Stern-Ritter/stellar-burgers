@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { dataPropTypes } from "../../utils/api";
+import { IngredientsContext } from "../../services/appContext";
 import styles from "./burger-ingredients.module.css";
-import PropTypes from "prop-types";
 
-function BurgerIngredients(props) {
+function BurgerIngredients() {
+  const ingredientsData = useContext(IngredientsContext);
   const [ categories ] = useState({
     bun: "Булки",
     sauce: "Соусы",
@@ -35,7 +35,7 @@ function BurgerIngredients(props) {
         <Tab value="main" active={currentCategory === "main"} onClick={setCurrentCategory}>Начинки</Tab>
       </div>
       <ul className={styles.categories}>
-        {props.data
+        {ingredientsData
           .map((el) => el.type)
           .filter((type, idx, arr) => arr.indexOf(type) === idx)
           .map((type) => {
@@ -43,9 +43,9 @@ function BurgerIngredients(props) {
               <li key={type}>
                 <h2 className="text text_type_main-medium">{categories[type]}</h2>
                 <ul className={styles.ingredients + " pl-4 pr-4 pt-6 pb-10"}>
-                  {props.data
-                    .filter((ingredient) => ingredient.type === type)
-                    .map((ingredient) => (<BurgerIngredient ingredient={ingredient} openHandler={openHandler}/>))
+                  {ingredientsData
+                    .filter((element) => element.type === type)
+                    .map((ingredient) => (<BurgerIngredient ingredient={ingredient} key={ingredient._id} openHandler={openHandler}/>))
                   }
                 </ul>
               </li>
@@ -55,16 +55,12 @@ function BurgerIngredients(props) {
       {
         visibleModal && <Modal title="Детали ингредиента" closeHandler={closeHandler}>
           <IngredientDetails
-            ingredient={props.data.find((ingredient) => ingredient._id === selectedIngredient)}>
+            ingredient={ingredientsData.find((ingredient) => ingredient._id === selectedIngredient)}>
           </IngredientDetails>
         </Modal>
       }
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes.isRequired).isRequired,
-};
 
 export default BurgerIngredients;

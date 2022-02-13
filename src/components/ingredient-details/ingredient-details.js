@@ -1,4 +1,5 @@
 import styles from "./ingredient-details.module.css";
+import { dataPropTypes } from "../../utils/api";
 import PropTypes from "prop-types";
 
 function IngredientDetails(props) {
@@ -48,17 +49,8 @@ function IngredientDetails(props) {
   );
 }
 
-const ingredient = PropTypes.shape({
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  image_large: PropTypes.string.isRequired
-});
-
 IngredientDetails.propTypes = {
-  ingredient: ingredient.isRequired
+  ingredient: dataPropTypes.isRequired,
 }
 
 export default IngredientDetails;

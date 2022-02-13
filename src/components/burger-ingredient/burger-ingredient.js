@@ -1,14 +1,11 @@
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { dataPropTypes } from "../../utils/api";
 import PropTypes from "prop-types";
 import styles from "./burger-ingredient.module.css";
-
 
 function BurgerIngredient({ ingredient, openHandler }) {
   return (
     <li
       className={styles.ingredient}
-      key={ingredient._id}
       onClick={() => openHandler(ingredient._id)}
     >
       <img
@@ -26,9 +23,16 @@ function BurgerIngredient({ ingredient, openHandler }) {
   );
 }
 
+const ingredient = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+});
+
 BurgerIngredient.propTypes = {
-  ingredient: dataPropTypes.isRequired,
-  openHandler: PropTypes.func.isRequired
+  ingredient: ingredient.isRequired,
+  openHandler: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredient;

@@ -53,11 +53,11 @@ function BurgerIngredients() {
           })}
       </ul>
       {
-        visibleModal && <Modal title="Детали ингредиента" closeHandler={closeHandler}>
+        visibleModal && (<Modal title="Детали ингредиента" closeHandler={closeHandler}>
           <IngredientDetails
             ingredient={ingredientsData.find((ingredient) => ingredient._id === selectedIngredient)}>
           </IngredientDetails>
-        </Modal>
+        </Modal>)
       }
     </section>
   );

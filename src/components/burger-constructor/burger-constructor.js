@@ -1,4 +1,5 @@
-import { useState, useContext, useReducer, useMemo } from "react";
+import { useState, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   ConstructorElement,
   DragIcon,
@@ -7,42 +8,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { API, checkResponse } from "../../utils/api";
-import { IngredientsContext, OrderContext } from "../../services/appContext";
+import { getOrder } from '../../services/actions/burger-constructor'
 import styles from "./burger-constructor.module.css";
 
 function BurgerConstructor() {
-  const ingredientsData = useContext(IngredientsContext);
-  const {orderState, setOrderState} = useContext(OrderContext);
+  const ingredientsData = useSelector((store) => store.ingredients.data);
+  const ingredients = useSelector((store) => store.constructorIngredients);
+  const dispatch = useDispatch();
+
   const [visibleModal, setVisibleModal] = useState(false);
-
-  function ingredientsReduce(state, action) {
-    switch(action.type) {
-      case 'bun':
-        return { ...state, bun: action.payload };
-      case 'main':
-        return { ...state, main: [...state.main, action.payload] };
-    }
-  }
-
-  const ingredientsInitialState = {
-    bun: "60d3b41abdacab0026a733c6",
-    main: [
-      "60d3b41abdacab0026a733c8",
-      "60d3b41abdacab0026a733c9",
-      "60d3b41abdacab0026a733ca",
-      "60d3b41abdacab0026a733cb",
-      "60d3b41abdacab0026a733cc",
-      "60d3b41abdacab0026a733cd",
-      "60d3b41abdacab0026a733d0",
-      "60d3b41abdacab0026a733d1",
-      "60d3b41abdacab0026a733d3",
-      "60d3b41abdacab0026a733d4",
-    ],
-  };
-
-  const [ingredients, ingredientsDispatcher] = useReducer(ingredientsReduce, ingredientsInitialState);
-
   const filteredBunIngredient = useMemo(
     () =>
       ingredientsData.filter(
@@ -72,23 +46,8 @@ function BurgerConstructor() {
   );
 
   const submitOrder = async () => {
-    try {
-      setVisibleModal(true);
-      setOrderState({ ...orderState, data: null, loading: true, hasError: false });
-      const res = await fetch(`${API}/orders`, {
-        method: "POST",
-        body: JSON.stringify({
-          ingredients: [ingredients.bun, ...ingredients.main],
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await checkResponse(res, "application/json");
-      setOrderState({ ...orderState, data, loading: false });
-    } catch (err) {
-      setOrderState({ ...orderState, loading: false, hasError: true });
-    }
+    setVisibleModal(true);
+    dispatch(getOrder(ingredients));
   };
 
   const closeHandler = () => {

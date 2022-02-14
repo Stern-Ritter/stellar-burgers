@@ -1,24 +1,23 @@
-import { useContext } from "react";
-import { OrderContext } from "../../services/appContext";
+import { useSelector } from 'react-redux';
 import styles from "./order-details.module.css";
 
 function OrderDetails() {
-  const { orderState } = useContext(OrderContext);
+  const { loading, hasError, data } = useSelector((store) => store.order);
 
   return (
     <div className={styles.details + " pl-10 pr-10 pt-30 pb-30"}>
-      {orderState.loading ? (
+      {loading ? (
         <p className="text text_type_main-default mb-2">
           Идет обработка заказа...
         </p>
-      ) : orderState.hasError ? (
+      ) : hasError ? (
         <p className="text text_type_main-default mb-2">
           Ошибка обработки заказа попробуйте чуть позже.
         </p>
       ) : (
         <>
           <p className={styles.id + " text text_type_digits-large mb-8"}>
-            {orderState.data.order.number}
+            {data.order.number}
           </p>
           <h2 className="text text_type_main-medium mb-15">
             идентификатор заказа

@@ -12,6 +12,7 @@ import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients() {
   const ingredientsData = useSelector((store) => store.ingredients.data);
+  const ingredients = useSelector((store) => store.constructorIngredients);
   const dispatch = useDispatch();
 
   const [visibleModal, setVisibleModal] = useState(false);
@@ -35,6 +36,16 @@ function BurgerIngredients() {
     }),
     [ingredientsData]
   );
+
+  const ingredientsCount = useMemo(
+    () =>
+      [ingredients.bun, ...ingredients.main].reduce((res, ingredient) => {
+        res[ingredient] = res[ingredient] ? res[ingredient] + 1 : 1;
+        return res;
+      }, {}),
+    [ingredients]
+  );
+
 
   const tabsRef = useRef(null);
   const categoriesRef = {
@@ -86,7 +97,12 @@ function BurgerIngredients() {
               <h2 className="text text_type_main-medium" ref={categoriesRef[type]}>{name}</h2>
               <ul className={styles.ingredients + " pl-4 pr-4 pt-6 pb-10"}>
                 {ingredients.map((ingredient) => (
-                  <BurgerIngredient ingredient={ingredient} key={ingredient._id} openHandler={openHandler}/>
+                  <BurgerIngredient
+                  ingredient={ingredient}
+                  key={ingredient._id}
+                  count={ingredientsCount[ingredient._id]}
+                  openHandler={openHandler}
+                  />
                 ))}
               </ul>
             </li>

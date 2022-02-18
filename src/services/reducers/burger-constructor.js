@@ -4,22 +4,12 @@ import {
   GET_ORDER_FAILED,
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
+  SHIFT_INGREDIENT,
 } from "../actions/burger-constructor";
 
 const constructorInitialState = {
   bun: "60d3b41abdacab0026a733c6",
-  main: [
-    "60d3b41abdacab0026a733c8",
-    "60d3b41abdacab0026a733c9",
-    "60d3b41abdacab0026a733ca",
-    "60d3b41abdacab0026a733cb",
-    "60d3b41abdacab0026a733cc",
-    "60d3b41abdacab0026a733cd",
-    "60d3b41abdacab0026a733d0",
-    "60d3b41abdacab0026a733d1",
-    "60d3b41abdacab0026a733d3",
-    "60d3b41abdacab0026a733d4",
-  ],
+  main: [],
 };
 
 const orderInitialState = {
@@ -34,14 +24,30 @@ export const constructorReducer = (state = constructorInitialState, action) => {
       if (action.ingredient.type === "bun") {
         return {
           ...state,
-          bun: action.ingredient._id,
+          bun: action.ingredient.id,
         };
       } else {
         return {
           ...state,
-          main: [...state.main, action.ingredient._id],
+          main: [...state.main, action.ingredient.id],
         };
       }
+    }
+    case REMOVE_INGREDIENT: {
+      return {
+        ...state,
+        main: state.main.filter((_, idx) => idx !== action.idx),
+      };
+    }
+    case SHIFT_INGREDIENT: {
+      const main = [...state.main];
+      const element = main[action.fromIndex];
+      main.splice(action.fromIndex, 1);
+      main.splice(action.toIndex, 0, element);
+      return {
+        ...state,
+        main
+      };
     }
     default: {
       return state;

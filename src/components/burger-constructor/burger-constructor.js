@@ -1,20 +1,35 @@
 import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { getOrder } from '../../services/actions/burger-constructor'
+import {
+  getOrder,
+  ADD_INGREDIENT,
+  REMOVE_INGREDIENT,
+} from "../../services/actions/burger-constructor";
 import styles from "./burger-constructor.module.css";
 
 function BurgerConstructor() {
   const ingredientsData = useSelector((store) => store.ingredients.data);
   const ingredients = useSelector((store) => store.constructorIngredients);
   const dispatch = useDispatch();
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(ingredient) {
+      dispatch({ type: ADD_INGREDIENT, ingredient });
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
 
   const [visibleModal, setVisibleModal] = useState(false);
   const filteredBunIngredient = useMemo(
@@ -54,9 +69,17 @@ function BurgerConstructor() {
     setVisibleModal(false);
   };
 
+  const deleteHandler = (idx) => {
+    dispatch({ type: REMOVE_INGREDIENT, idx });
+  };
+
+  const containerClass = `${styles.constructor} ${
+    isHover ? styles.onHover : ""
+  }`;
+
   return (
     <section className="pt-25 pb-13">
-      <ul className={styles.constructor}>
+      <ul className={containerClass} ref={dropTarget}>
         {filteredBunIngredient.map((ingredient) => {
           return (
             <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
@@ -74,14 +97,12 @@ function BurgerConstructor() {
           <ul className={styles.list}>
             {filteredMainIngredients.map((ingredient, idx) => {
               return (
-                <li className={styles.ingredient + " pl-2 pr-2"} key={idx}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                  />
-                </li>
+                <BurgerConstructorItem
+                  key={idx}
+                  ingredient={ingredient}
+                  idx={idx}
+                  handleClose={deleteHandler}
+                />
               );
             })}
           </ul>

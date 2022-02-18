@@ -6,6 +6,7 @@ export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
+export const SHIFT_INGREDIENT = 'SHIFT_INGREDIENT';
 
 export function getOrder(ingredients) {
   return async function(dispatch) {

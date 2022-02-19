@@ -6,18 +6,17 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { SHIFT_INGREDIENT } from '../../services/actions/burger-constructor'
+import { dataPropTypes } from '../../utils/api'
+import PropTypes from "prop-types";
 import styles from "./burger-constructor-item.module.css";
 
 function BurgerConstructorItem({ ingredient, idx, handleClose }) {
   const dispatch = useDispatch();
   const ref = useRef(null);
 
-  const [{isDrag}, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     type: 'shiftedIngredient',
-    item: { idx },
-    collect: (monitor) => ({
-      isDrag: monitor.isDragging(),
-    })
+    item: { idx }
   });
 
   const [, dropRef] = useDrop({
@@ -51,5 +50,11 @@ function BurgerConstructorItem({ ingredient, idx, handleClose }) {
     </li>
   );
 }
+
+BurgerConstructorItem.propTypes = {
+  ingredient: dataPropTypes.isRequired,
+  idx: PropTypes.number,
+  handleClose: PropTypes.func.isRequired,
+};
 
 export default BurgerConstructorItem;

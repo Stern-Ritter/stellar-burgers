@@ -46,7 +46,6 @@ function BurgerIngredients() {
     [ingredients]
   );
 
-
   const tabsRef = useRef(null);
   const categoriesRef = {
     bun: useRef(null),

@@ -15,7 +15,7 @@ function BurgerIngredients() {
   const ingredients = useSelector((store) => store.constructorIngredients);
   const dispatch = useDispatch();
 
-  const ingredient = useSelector((store) => store.selectedIngredient);
+  const selectedIngredient = useSelector((store) => store.selectedIngredient);
 
   const [currentCategory, setCurrentCategory] = useState("bun");
   const categories = useMemo(
@@ -106,7 +106,7 @@ function BurgerIngredients() {
           );
         })}
       </ul>
-      {ingredient && (
+      {selectedIngredient && (
         <Modal title="Детали ингредиента" closeHandler={closeHandler}>
           <IngredientDetails />
         </Modal>

@@ -74,8 +74,7 @@ export const orderReducer = (state = orderInitialState, action) => {
     }
     case GET_ORDER_FAILED: {
       return {
-        ...state,
-        loading: false,
+        ...orderInitialState,
         hasError: true,
       };
     }

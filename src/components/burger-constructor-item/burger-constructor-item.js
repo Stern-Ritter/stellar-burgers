@@ -53,7 +53,7 @@ function BurgerConstructorItem({ ingredient, idx, handleClose }) {
 
 BurgerConstructorItem.propTypes = {
   ingredient: dataPropTypes.isRequired,
-  idx: PropTypes.number,
+  idx: PropTypes.number.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
 

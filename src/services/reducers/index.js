@@ -31,8 +31,7 @@ const ingredientsReducer = (state = initialState, action) => {
     }
     case GET_INGREDIENTS_FAILED: {
       return {
-        ...state,
-        loading: false,
+        ...initialState,
         hasError: true,
       };
     }

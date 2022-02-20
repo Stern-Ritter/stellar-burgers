@@ -8,7 +8,7 @@ import {
 } from "../actions/burger-constructor";
 
 const constructorInitialState = {
-  bun: "60d3b41abdacab0026a733c6",
+  bun: null,
   main: [],
 };
 

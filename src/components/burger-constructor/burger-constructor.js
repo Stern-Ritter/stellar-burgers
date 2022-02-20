@@ -9,6 +9,7 @@ import {
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import BurgerConstructorStub from "../burger-constructor-stub/burger-constructor-stub";
 import {
   getOrder,
   ADD_INGREDIENT,
@@ -50,6 +51,11 @@ function BurgerConstructor() {
     [ingredientsData, ingredients]
   );
 
+  const isConstructorEmpty = useMemo(
+    () => filteredBunIngredient.length + filteredMainIngredients.length === 0,
+    [filteredBunIngredient, filteredMainIngredients]
+  );
+
   const orderCost = useMemo(
     () =>
       [
@@ -79,50 +85,54 @@ function BurgerConstructor() {
 
   return (
     <section className="pt-25 pb-13">
-      <ul className={containerClass} ref={dropTarget}>
-        {filteredBunIngredient.map((ingredient) => {
-          return (
-            <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={ingredient.name + " (верх)"}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-              />
-            </li>
-          );
-        })}
-        <li className={styles.ingredients}>
-          <ul className={styles.list}>
-            {filteredMainIngredients.map((ingredient, idx) => {
-              return (
-                <BurgerConstructorItem
-                  key={idx}
-                  ingredient={ingredient}
-                  idx={idx}
-                  handleClose={deleteHandler}
-                />
-              );
-            })}
-          </ul>
-        </li>
-        {ingredientsData
-          .filter((el) => el._id === ingredients.bun)
-          .map((ingredient) => {
+      {isConstructorEmpty ? (
+        <BurgerConstructorStub isHover={isHover} dropTarget={dropTarget} />
+      ) : (
+        <ul className={containerClass} ref={dropTarget}>
+          {filteredBunIngredient.map((ingredient) => {
             return (
               <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
                 <ConstructorElement
-                  type="bottom"
+                  type="top"
                   isLocked={true}
-                  text={ingredient.name + " (низ)"}
+                  text={ingredient.name + " (верх)"}
                   price={ingredient.price}
                   thumbnail={ingredient.image}
                 />
               </li>
             );
           })}
-      </ul>
+          <li className={styles.ingredients}>
+            <ul className={styles.list}>
+              {filteredMainIngredients.map((ingredient, idx) => {
+                return (
+                  <BurgerConstructorItem
+                    key={idx}
+                    ingredient={ingredient}
+                    idx={idx}
+                    handleClose={deleteHandler}
+                  />
+                );
+              })}
+            </ul>
+          </li>
+          {ingredientsData
+            .filter((el) => el._id === ingredients.bun)
+            .map((ingredient) => {
+              return (
+                <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
+                  <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text={ingredient.name + " (низ)"}
+                    price={ingredient.price}
+                    thumbnail={ingredient.image}
+                  />
+                </li>
+              );
+            })}
+        </ul>
+      )}
       <div className={styles.purchase + " pt-10"}>
         <div className={styles.total + " mr-10"}>
           <p className="text text_type_digits-medium mr-2">{orderCost}</p>

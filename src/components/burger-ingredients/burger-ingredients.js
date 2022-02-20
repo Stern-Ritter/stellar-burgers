@@ -15,7 +15,7 @@ function BurgerIngredients() {
   const ingredients = useSelector((store) => store.constructorIngredients);
   const dispatch = useDispatch();
 
-  const [visibleModal, setVisibleModal] = useState(false);
+  const ingredient = useSelector((store) => store.selectedIngredient);
 
   const [currentCategory, setCurrentCategory] = useState("bun");
   const categories = useMemo(
@@ -54,13 +54,11 @@ function BurgerIngredients() {
   };
 
   const openHandler = (id) => {
-    setVisibleModal(true);
     const ingredient = ingredientsData.find((el) => el._id === id);
     dispatch({ type: SET_SELECTED_INGREDIENT, ingredient });
   };
 
   const closeHandler = () => {
-    setVisibleModal(false);
     dispatch({ type: REMOVE_SELECTED_INGREDIENT });
   };
 
@@ -108,7 +106,7 @@ function BurgerIngredients() {
           );
         })}
       </ul>
-      {visibleModal && (
+      {ingredient && (
         <Modal title="Детали ингредиента" closeHandler={closeHandler}>
           <IngredientDetails />
         </Modal>

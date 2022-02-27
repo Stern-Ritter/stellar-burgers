@@ -12,6 +12,11 @@
   max-height: 620px;
 }
 
+.onHover {
+  border: 3px solid #3C39EC;
+  border-radius: 15px;
+}
+
 .bun {
   display: flex;
   justify-content: end;
@@ -20,12 +25,6 @@
 .ingredients {
   height: 70%;
   overflow-y: auto;
-}
-
-.ingredient {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .purchase {

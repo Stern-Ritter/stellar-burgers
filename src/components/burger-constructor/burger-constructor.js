@@ -1,48 +1,38 @@
-import { useState, useContext, useReducer, useMemo } from "react";
+import { useState, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { API, checkResponse } from "../../utils/api";
-import { IngredientsContext, OrderContext } from "../../services/appContext";
+import BurgerConstructorStub from "../burger-constructor-stub/burger-constructor-stub";
+import {
+  getOrder,
+  ADD_INGREDIENT,
+  REMOVE_INGREDIENT,
+} from "../../services/actions/burger-constructor";
 import styles from "./burger-constructor.module.css";
 
 function BurgerConstructor() {
-  const ingredientsData = useContext(IngredientsContext);
-  const {orderState, setOrderState} = useContext(OrderContext);
+  const ingredientsData = useSelector((store) => store.ingredients.data);
+  const ingredients = useSelector((store) => store.constructorIngredients);
+  const dispatch = useDispatch();
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(ingredient) {
+      dispatch({ type: ADD_INGREDIENT, ingredient });
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
   const [visibleModal, setVisibleModal] = useState(false);
-
-  function ingredientsReduce(state, action) {
-    switch(action.type) {
-      case 'bun':
-        return { ...state, bun: action.payload };
-      case 'main':
-        return { ...state, main: [...state.main, action.payload] };
-    }
-  }
-
-  const ingredientsInitialState = {
-    bun: "60d3b41abdacab0026a733c6",
-    main: [
-      "60d3b41abdacab0026a733c8",
-      "60d3b41abdacab0026a733c9",
-      "60d3b41abdacab0026a733ca",
-      "60d3b41abdacab0026a733cb",
-      "60d3b41abdacab0026a733cc",
-      "60d3b41abdacab0026a733cd",
-      "60d3b41abdacab0026a733d0",
-      "60d3b41abdacab0026a733d1",
-      "60d3b41abdacab0026a733d3",
-      "60d3b41abdacab0026a733d4",
-    ],
-  };
-
-  const [ingredients, ingredientsDispatcher] = useReducer(ingredientsReduce, ingredientsInitialState);
-
   const filteredBunIngredient = useMemo(
     () =>
       ingredientsData.filter(
@@ -61,6 +51,11 @@ function BurgerConstructor() {
     [ingredientsData, ingredients]
   );
 
+  const isConstructorEmpty = useMemo(
+    () => filteredBunIngredient.length + filteredMainIngredients.length === 0,
+    [filteredBunIngredient, filteredMainIngredients]
+  );
+
   const orderCost = useMemo(
     () =>
       [
@@ -72,77 +67,72 @@ function BurgerConstructor() {
   );
 
   const submitOrder = async () => {
-    try {
-      setVisibleModal(true);
-      setOrderState({ ...orderState, data: null, loading: true, hasError: false });
-      const res = await fetch(`${API}/orders`, {
-        method: "POST",
-        body: JSON.stringify({
-          ingredients: [ingredients.bun, ...ingredients.main],
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await checkResponse(res, "application/json");
-      setOrderState({ ...orderState, data, loading: false });
-    } catch (err) {
-      setOrderState({ ...orderState, loading: false, hasError: true });
-    }
+    setVisibleModal(true);
+    dispatch(getOrder(ingredients));
   };
 
   const closeHandler = () => {
     setVisibleModal(false);
   };
 
+  const deleteHandler = (idx) => {
+    dispatch({ type: REMOVE_INGREDIENT, idx });
+  };
+
+  const containerClass = `${styles.constructor} ${
+    isHover ? styles.onHover : ""
+  }`;
+
   return (
     <section className="pt-25 pb-13">
-      <ul className={styles.constructor}>
-        {filteredBunIngredient.map((ingredient) => {
-          return (
-            <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={ingredient.name + " (верх)"}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-              />
-            </li>
-          );
-        })}
-        <li className={styles.ingredients}>
-          <ul className={styles.list}>
-            {filteredMainIngredients.map((ingredient, idx) => {
-              return (
-                <li className={styles.ingredient + " pl-2 pr-2"} key={idx}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </li>
-        {ingredientsData
-          .filter((el) => el._id === ingredients.bun)
-          .map((ingredient) => {
+      {isConstructorEmpty ? (
+        <BurgerConstructorStub isHover={isHover} dropTarget={dropTarget} />
+      ) : (
+        <ul className={containerClass} ref={dropTarget}>
+          {filteredBunIngredient.map((ingredient) => {
             return (
               <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
                 <ConstructorElement
-                  type="bottom"
+                  type="top"
                   isLocked={true}
-                  text={ingredient.name + " (низ)"}
+                  text={ingredient.name + " (верх)"}
                   price={ingredient.price}
                   thumbnail={ingredient.image}
                 />
               </li>
             );
           })}
-      </ul>
+          <li className={styles.ingredients}>
+            <ul className={styles.list}>
+              {filteredMainIngredients.map((ingredient, idx) => {
+                return (
+                  <BurgerConstructorItem
+                    key={idx}
+                    ingredient={ingredient}
+                    idx={idx}
+                    handleClose={deleteHandler}
+                  />
+                );
+              })}
+            </ul>
+          </li>
+          {ingredientsData
+            .filter((el) => el._id === ingredients.bun)
+            .map((ingredient) => {
+              return (
+                <li className={styles.bun + " pl-4 pr-4"} key={ingredient._id}>
+                  <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text={ingredient.name + " (низ)"}
+                    price={ingredient.price}
+                    thumbnail={ingredient.image}
+                  />
+                </li>
+              );
+            })}
+        </ul>
+      )}
       <div className={styles.purchase + " pt-10"}>
         <div className={styles.total + " mr-10"}>
           <p className="text text_type_digits-medium mr-2">{orderCost}</p>

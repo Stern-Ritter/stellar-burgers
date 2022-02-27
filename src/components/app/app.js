@@ -1,42 +1,24 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { API, checkResponse } from "../../utils/api";
-import { IngredientsContext, OrderContext } from "../../services/appContext";
+import { getIngredients } from "../../services/actions";
 import styles from "./app.module.css";
 
 function App() {
-  const [ingredients, setIngredients] = useState({
-    data: [],
-    loading: true,
-    hasError: false,
-  });
-
-  const [orderState, setOrderState] = useState({
-    data: null,
-    loading: true,
-    hasError: false,
-  });
+  const { hasError } = useSelector((store) => store.ingredients);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getIngredientsData();
-  }, []);
-
-  const getIngredientsData = async () => {
-    try {
-      setIngredients({ ...ingredients, loading: true, hasError: false });
-      const res = await fetch(`${API}/ingredients`);
-      const { data } = await checkResponse(res, "application/json");
-      setIngredients({ ...ingredients, data, loading: false });
-    } catch (err) {
-      setIngredients({ ...ingredients, loading: false, hasError: true });
-    }
-  };
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <>
-      {ingredients.hasError ? (
+      {hasError ? (
         <>
           <h1>Что-то пошло не так...</h1>
           <p>
@@ -46,14 +28,12 @@ function App() {
       ) : (
         <>
           <AppHeader />
-          <main className={styles.main}>
-            <IngredientsContext.Provider value={ingredients.data}>
-              <OrderContext.Provider value={{ orderState, setOrderState }}>
-                <BurgerIngredients />
-                <BurgerConstructor />
-              </OrderContext.Provider>
-            </IngredientsContext.Provider>
-          </main>
+          <DndProvider backend={HTML5Backend}>
+            <main className={styles.main}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </main>
+          </DndProvider>
         </>
       )}
     </>

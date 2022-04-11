@@ -1,12 +1,19 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import Main from "../../pages/main/main";
+import Login from "../../pages/login/login";
+import Register from "../../pages/register/register";
+import ForgotPassword from "../../pages/forgot-password/forgot-password";
+import ResetPassword from "../../pages/reset-password/reset-password";
+import Profile from "../../pages/profile/profile";
+import Ingredient from "../../pages/ingredient/ingredient";
+import Profile from "../../pages/profile/profile";
+import Ingredient from "../../pages/ingredient/ingredient";
+import NotFound from "../../pages/not-found/not-found";
 import { getIngredients } from "../../services/actions";
-import styles from "./app.module.css";
+import Profile from "../../pages/profile/profile";
 
 function App() {
   const { hasError } = useSelector((store) => store.ingredients);
@@ -28,12 +35,34 @@ function App() {
       ) : (
         <>
           <AppHeader />
-          <DndProvider backend={HTML5Backend}>
-            <main className={styles.main}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </main>
-          </DndProvider>
+          <Router>
+            <Switch>
+              <Route path="/" exact>
+                <Main />
+              </Route>
+              <Route path="/login" exact>
+                <Login />
+              </Route>
+              <Route path="/register" exact>
+                <Register />
+              </Route>
+              <Route path="/forgot-password" exact>
+                <ForgotPassword />
+              </Route>
+              <Route path="/reset-password" exact>
+                <ResetPassword />
+              </Route>
+              <Route path="/profile" exact>
+                <Profile />
+              </Route>
+              <Route path="/ingredients/:id" exact>
+                <Ingredient />
+              </Route>
+              <Route>
+                <NotFound />
+              </Route>
+            </Switch>
+          </Router>
         </>
       )}
     </>

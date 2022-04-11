@@ -20,7 +20,10 @@ function Login() {
         <span className="text text_type_main-default text_color_inactive mr-2">
           Вы — новый пользователь?
         </span>
-        <Link className={styles.link + " text text_type_main-default"}>
+        <Link
+          to="/register"
+          className={styles.link + " text text_type_main-default"}
+        >
           Зарегистрироваться
         </Link>
       </div>
@@ -28,7 +31,10 @@ function Login() {
         <span className="text text_type_main-default text_color_inactive mr-2">
           Забыли пароль?
         </span>
-        <Link className={styles.link + " text text_type_main-default"}>
+        <Link
+          to="/forgot-password"
+          className={styles.link + " text text_type_main-default"}
+        >
           Восстановить пароль
         </Link>
       </div>

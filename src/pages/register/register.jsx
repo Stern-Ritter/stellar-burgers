@@ -21,7 +21,10 @@ function Register() {
         <span className="text text_type_main-default text_color_inactive mr-2">
           Уже зарегистрированы?
         </span>
-        <Link className={styles.link + " text text_type_main-default"}>
+        <Link
+          to="/login"
+          className={styles.link + " text text_type_main-default"}
+        >
           Войти
         </Link>
       </div>

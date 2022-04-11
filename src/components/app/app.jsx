@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import Main from "../../pages/main/main";
 import Login from "../../pages/login/login";
@@ -33,7 +33,7 @@ function App() {
         <>
           <AppHeader />
           <Router>
-            <Routes>
+            <Switch>
               <Route path="/" exact>
                 <Main />
               </Route>
@@ -58,7 +58,7 @@ function App() {
               <Route>
                 <NotFound />
               </Route>
-            </Routes>
+            </Switch>
           </Router>
         </>
       )}

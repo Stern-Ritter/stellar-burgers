@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState } from "react";
+import React, { useRef, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";

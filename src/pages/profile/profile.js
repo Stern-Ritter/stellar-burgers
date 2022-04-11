@@ -1,3 +1,5 @@
+import styles from './profile.module.css'
+
 function Profile() {
 
 }

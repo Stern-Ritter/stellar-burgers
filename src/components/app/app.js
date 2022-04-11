@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import Main from "../../pages/main/main";
 import Login from "../../pages/login/login";
@@ -9,11 +9,8 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Profile from "../../pages/profile/profile";
 import Ingredient from "../../pages/ingredient/ingredient";
-import Profile from "../../pages/profile/profile";
-import Ingredient from "../../pages/ingredient/ingredient";
 import NotFound from "../../pages/not-found/not-found";
 import { getIngredients } from "../../services/actions";
-import Profile from "../../pages/profile/profile";
 
 function App() {
   const { hasError } = useSelector((store) => store.ingredients);
@@ -36,7 +33,7 @@ function App() {
         <>
           <AppHeader />
           <Router>
-            <Switch>
+            <Routes>
               <Route path="/" exact>
                 <Main />
               </Route>
@@ -61,7 +58,7 @@ function App() {
               <Route>
                 <NotFound />
               </Route>
-            </Switch>
+            </Routes>
           </Router>
         </>
       )}

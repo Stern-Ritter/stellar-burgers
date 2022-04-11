@@ -1,10 +1,12 @@
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
+import styles from './login.module.css';
 
 function Login() {
   return (
-    <>
-      <Logo />
-    </>
+    <div>
+      <h1>Вход</h1>
+
+    </div>
   );
 }
 

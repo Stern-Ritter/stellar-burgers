@@ -1,3 +1,5 @@
+import styles from './ingredient.module.css'
+
 function Ingredient() {
 
 }

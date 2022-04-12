@@ -1,7 +1,11 @@
 import { registerRequest } from "../../utils/api";
 import { setCookie } from "../../utils/cookies";
 import { setStorageItem } from "../../utils/storage";
-import { accessTokenKey, refreshTokenKey } from "../../utils/constants";
+import {
+  accessTokenKey,
+  refreshTokenKey,
+  cookieExpires,
+} from "../../utils/constants";
 
 export const REGISTER = "REGISTER";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -22,11 +26,11 @@ export function register(form) {
     dispatch({ type: REGISTER });
     try {
       const data = await registerRequest(form);
-      
+
       if (data?.success && data?.accessToken && data?.refreshToken) {
         const accessToken = data.accessToken.split("Bearer ")[1];
         const refreshToken = data.refreshToken;
-        setCookie(accessTokenKey, accessToken);
+        setCookie(accessTokenKey, accessToken, { expires: cookieExpires });
         setStorageItem(refreshTokenKey, refreshToken);
 
         dispatch({ type: REGISTER_SUCCESS });

@@ -1,7 +1,11 @@
 import { loginRequest } from "../../utils/api";
 import { setCookie } from "../../utils/cookies";
 import { setStorageItem } from "../../utils/storage";
-import { accessTokenKey, refreshTokenKey } from "../../utils/constants";
+import {
+  accessTokenKey,
+  refreshTokenKey,
+  cookieExpires,
+} from "../../utils/constants";
 
 export const LOGIN = "LOGIN";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -22,11 +26,11 @@ export function login(form) {
     dispatch({ type: LOGIN });
     try {
       const data = await loginRequest(form);
-      
+
       if (data?.success && data?.accessToken && data?.refreshToken) {
         const accessToken = data.accessToken.split("Bearer ")[1];
         const refreshToken = data.refreshToken;
-        setCookie(accessTokenKey, accessToken);
+        setCookie(accessTokenKey, accessToken, { expires: cookieExpires });
         setStorageItem(refreshTokenKey, refreshToken);
 
         dispatch({ type: LOGIN_SUCCESS });

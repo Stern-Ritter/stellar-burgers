@@ -21,6 +21,7 @@ const userInitialState = {
   form: {
     name: "",
     email: "",
+    password: "",
   },
 
   getUserRequest: false,
@@ -54,6 +55,7 @@ export const userReducer = (state = userInitialState, action) => {
           ...action.payload,
         },
         form: {
+          ...state.form,
           ...action.payload,
         },
       };
@@ -82,6 +84,7 @@ export const userReducer = (state = userInitialState, action) => {
           ...action.payload,
         },
         form: {
+          ...state.form,
           ...action.payload,
         },
       };
@@ -97,7 +100,7 @@ export const userReducer = (state = userInitialState, action) => {
       return {
         ...state,
         form: {
-          ...state.from,
+          ...state.form,
           [action.payload.field]: action.payload.value,
         },
       };
@@ -106,6 +109,7 @@ export const userReducer = (state = userInitialState, action) => {
       return {
         ...state,
         form: {
+          ...userInitialState.form,
           ...state.data,
         },
       };

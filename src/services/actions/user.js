@@ -63,7 +63,7 @@ export function getUser() {
         dispatch({ type: GET_USER_FAILED });
       }
     } catch (err) {
-      if (error === "Ошибка: 403") {
+      if (err === "Ошибка: 403") {
         await refreshToken();
         const token = getCookie(accessTokenKey);
         const data = await getUserRequest(token);
@@ -88,7 +88,7 @@ export function updateUser(form) {
         dispatch({ type: UPDATE_USER_FAILED });
       }
     } catch (err) {
-      if (error === "Ошибка: 403") {
+      if (err === "Ошибка: 403") {
         await refreshToken();
         const token = getCookie(accessTokenKey);
         const data = await updateUserRequest(form, token);

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   Input,
   PasswordInput,
@@ -11,6 +11,8 @@ import {
   setRegisterFormValue,
   register,
 } from "../../services/actions/register";
+import { getCookie } from "../../utils/cookies";
+import { accessTokenKey } from "../../utils/constants";
 import styles from "./register.module.css";
 
 function Register() {
@@ -36,6 +38,10 @@ function Register() {
     evt.preventDefault();
     dispatch(register({ email, password, name }));
   };
+
+  if (getCookie(accessTokenKey)) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <form className={styles.form} onSubmit={onFormSubmit}>

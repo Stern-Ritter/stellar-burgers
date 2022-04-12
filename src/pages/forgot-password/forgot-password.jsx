@@ -1,14 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Input,
+  Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  FORGOT_PASSWORD_FORM_CLEAR_STATE,
+  setForgotPasswordFormValue,
+  forgotPassword,
+} from "../../services/actions/forgot-password";
 import styles from "./forgot-password.module.css";
 
 function ForgotPassword() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: FORGOT_PASSWORD_FORM_CLEAR_STATE });
+  }, [dispatch]);
+
+  const {
+    data: { email },
+    loading,
+    success,
+    hasError,
+  } = useSelector((store) => store.forgotPasswordForm);
+
+  const onFormChange = (evt) => {
+    const input = evt.target;
+    dispatch(
+      setForgotPasswordFormValue({ field: input.name, value: input.value })
+    );
+  };
+
+  const onFormSubmit = (evt) => {
+    evt.preventDefault();
+    dispatch(forgotPassword({ email }));
+  };
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={onFormSubmit}>
       <h1 className="text text_type_main-medium mb-6">Восстановление пароля</h1>
-      <Input type="email" placeholder="Укажите e-mail" name="email" />
-      <Button type="primary" size="medium">
+      <Input
+        type="email"
+        placeholder="Укажите e-mail"
+        name="email"
+        value={email}
+        onChange={onFormChange}
+      />
+      <Button type="primary" size="medium" disabled={loading}>
         Восстановить
       </Button>
       <div className="mt-20 mb-4">

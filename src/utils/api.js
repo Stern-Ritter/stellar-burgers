@@ -76,6 +76,31 @@ async function refreshTokenRequest(token) {
   return data;
 }
 
+async function getUserRequest(token) {
+  const res = await fetch(`${API}/auth/user `, {
+    method: "GET",
+    headers: {
+      ...headers,
+      authorization: token
+    },
+  });
+  const data = await checkResponse(res, "application/json");
+  return data;
+}
+
+async function updateUserRequest(form, token) {
+  const res = await fetch(`${API}/auth/user `, {
+    method: "POST",
+    body: JSON.stringify(form),
+    headers: {
+      ...headers,
+      authorization: token
+    },
+  });
+  const data = await checkResponse(res, "application/json");
+  return data;
+}
+
 const dataPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -94,6 +119,8 @@ export {
   loginRequest,
   refreshTokenRequest,
   logoutRequest,
+  getUserRequest,
+  updateUserRequest,
   resetPasswordRequest,
   updatePasswordRequest,
   API,

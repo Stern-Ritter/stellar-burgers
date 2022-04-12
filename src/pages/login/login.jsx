@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { useLocation, Link, Redirect } from "react-router-dom";
 import {
   Input,
   PasswordInput,
@@ -11,12 +11,11 @@ import {
   setLoginFormValue,
   login,
 } from "../../services/actions/login";
-import { getCookie } from "../../utils/cookies";
-import { accessTokenKey } from "../../utils/constants";
 import styles from "./login.module.css";
 
 function Login() {
   const dispatch = useDispatch();
+  const { state } = useLocation();
 
   useEffect(() => {
     dispatch({ type: LOGIN_FORM_CLEAR_STATE });
@@ -39,8 +38,8 @@ function Login() {
     dispatch(login({ email, password }));
   };
 
-  if (getCookie(accessTokenKey)) {
-    return <Redirect to="/" />;
+  if (success) {
+    return <Redirect to={state?.from || "/"} />;
   }
 
   return (

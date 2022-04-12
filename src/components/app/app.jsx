@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ProtectedRoute from "../protected-route/protected-route";
 import AppHeader from "../app-header/app-header";
 import Main from "../../pages/main/main";
 import Login from "../../pages/login/login";
@@ -49,9 +50,9 @@ function App() {
               <Route path="/reset-password" exact>
                 <ResetPassword />
               </Route>
-              <Route path="/profile" exact>
+              <ProtectedRoute path="/profile" exact>
                 <Profile />
-              </Route>
+              </ProtectedRoute>
               <Route path="/ingredients/:id" exact>
                 <Ingredient />
               </Route>

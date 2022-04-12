@@ -4,8 +4,10 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
 } from "../actions";
-import { currentIngredientReducer } from './burger-ingredients';
+import { currentIngredientReducer } from "./burger-ingredients";
 import { constructorReducer, orderReducer } from "./burger-constructor";
+import { forgotPasswordFormReducer } from "./forgot-password";
+import { resetPasswordFormReducer } from "./reset-password";
 
 const initialState = {
   loading: false,
@@ -46,4 +48,6 @@ export const rootReducer = combineReducers({
   selectedIngredient: currentIngredientReducer,
   constructorIngredients: constructorReducer,
   order: orderReducer,
+  forgotPasswordForm: forgotPasswordFormReducer,
+  resetPasswordForm: resetPasswordFormReducer,
 });

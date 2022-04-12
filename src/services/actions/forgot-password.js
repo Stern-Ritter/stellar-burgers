@@ -1,4 +1,4 @@
-import { API, checkResponse } from "../../utils/api";
+import { updatePasswordRequest } from "../../utils/api";
 
 export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -19,16 +19,10 @@ export function forgotPassword(form) {
   return async function (dispatch) {
     dispatch({ type: FORGOT_PASSWORD });
     try {
-      const res = await fetch(`${API}/password-reset`, {
-        method: "POST",
-        body: JSON.stringify(form),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await checkResponse(res, "application/json");
+      const data = await updatePasswordRequest(form);
       if (data?.success) {
         dispatch({ type: FORGOT_PASSWORD_SUCCESS });
+        dispatch({ type: FORGOT_PASSWORD_FORM_CLEAR_STATE });
       } else {
         dispatch({ type: FORGOT_PASSWORD_FAILED });
       }

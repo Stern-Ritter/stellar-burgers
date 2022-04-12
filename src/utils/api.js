@@ -25,4 +25,34 @@ const dataPropTypes = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
 });
 
-export { API, checkResponse, dataPropTypes };
+async function resetPasswordRequest(form) {
+  const res = await fetch(`${API}/password-reset/reset`, {
+    method: "POST",
+    body: JSON.stringify(form),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await checkResponse(res, "application/json");
+  return data;
+}
+
+async function updatePasswordRequest(form) {
+  const res = await fetch(`${API}/password-reset`, {
+    method: "POST",
+    body: JSON.stringify(form),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await checkResponse(res, "application/json");
+  return data;
+}
+
+export {
+  resetPasswordRequest,
+  updatePasswordRequest,
+  API,
+  checkResponse,
+  dataPropTypes,
+};

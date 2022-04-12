@@ -6,6 +6,8 @@ import {
 } from "../actions";
 import { currentIngredientReducer } from "./burger-ingredients";
 import { constructorReducer, orderReducer } from "./burger-constructor";
+import { registerFormReducer } from "./register";
+import { loginFormReducer } from "./login";
 import { forgotPasswordFormReducer } from "./forgot-password";
 import { resetPasswordFormReducer } from "./reset-password";
 
@@ -48,6 +50,8 @@ export const rootReducer = combineReducers({
   selectedIngredient: currentIngredientReducer,
   constructorIngredients: constructorReducer,
   order: orderReducer,
+  registerForm : registerFormReducer,
+  loginForm : loginFormReducer,
   forgotPasswordForm: forgotPasswordFormReducer,
   resetPasswordForm: resetPasswordFormReducer,
 });

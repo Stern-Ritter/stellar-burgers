@@ -5,6 +5,7 @@ import {
   UPDATE_USER,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
+  UPDATE_USER_FORM_SET_VALUE,
   UPDATE_USER_FORM_CLEAR_STATE,
   LOGOUT,
   LOGOUT_SUCCESS,
@@ -90,6 +91,15 @@ export const userReducer = (state = userInitialState, action) => {
         ...state,
         updateUserRequest: false,
         updateUserRequestFailed: true,
+      };
+    }
+    case UPDATE_USER_FORM_SET_VALUE: {
+      return {
+        ...state,
+        form: {
+          ...state.from,
+          [action.payload.field]: action.payload.value,
+        },
       };
     }
     case UPDATE_USER_FORM_CLEAR_STATE: {

@@ -23,11 +23,19 @@ export const GET_USER_FAILED = "GET_USER_FAILED";
 export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
 export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
+export const UPDATE_USER_FORM_SET_VALUE = "UPDATE_USER_FORM_SET_VALUE";
 export const UPDATE_USER_FORM_CLEAR_STATE = "UPDATE_USER_FORM_CLEAR_STATE";
 
 export const LOGOUT = "LOGOUT";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
+
+export function setUpdateUserFormValue({ field, value }) {
+  return {
+    type: UPDATE_USER_FORM_SET_VALUE,
+    payload: { field, value },
+  };
+}
 
 export async function refreshToken() {
   const token = getStorageItem(refreshTokenKey);
@@ -43,7 +51,7 @@ export async function refreshToken() {
   }
 }
 
-export async function getUser() {
+export function getUser() {
   return async function (dispatch) {
     dispatch({ type: GET_USER });
     try {
@@ -68,7 +76,7 @@ export async function getUser() {
   };
 }
 
-export async function updateUser(form) {
+export function updateUser(form) {
   return async function (dispatch) {
     dispatch({ type: UPDATE_USER });
     try {

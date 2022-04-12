@@ -30,16 +30,14 @@ function ProfileNavigation() {
           </NavLink>
         </li>
         <li className={styles.item}>
-          <NavLink
-            to="/"
-            exact
+          <button
+            type="button"
             className={
-              styles.link + " text text_type_main-medium text_color_inactive"
+              styles.button + " text text_type_main-medium text_color_inactive"
             }
-            activeClassName={styles.activeLink}
           >
             Выход
-          </NavLink>
+          </button>
         </li>
       </ul>
       <p
@@ -48,7 +46,8 @@ function ProfileNavigation() {
           " text text_type_main-default text_color_inactive"
         }
       >
-        В&nbsp;этом разделе вы&nbsp;можете изменить&nbsp;свои персональные данные
+        В&nbsp;этом разделе вы&nbsp;можете изменить&nbsp;свои персональные
+        данные
       </p>
     </div>
   );

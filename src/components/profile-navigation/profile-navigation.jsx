@@ -1,7 +1,17 @@
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useHistory, NavLink } from "react-router-dom";
+import { logout } from "../../services/actions/user";
 import styles from "./profile-navigation.module.css";
 
 function ProfileNavigation() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const signOut = () => {
+    dispatch(logout(history));
+  };
+
   return (
     <div className={styles.container + " mr-15"}>
       <ul className={styles.links}>
@@ -35,6 +45,7 @@ function ProfileNavigation() {
             className={
               styles.button + " text text_type_main-medium text_color_inactive"
             }
+            onClick={signOut}
           >
             Выход
           </button>

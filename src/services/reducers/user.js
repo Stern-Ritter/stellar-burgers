@@ -7,13 +7,11 @@ import {
   UPDATE_USER_FAILED,
   UPDATE_USER_FORM_SET_VALUE,
   UPDATE_USER_FORM_CLEAR_STATE,
+  LOGGED_IN,
   LOGOUT,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
 } from "../actions/user";
-
-import { LOGIN_SUCCESS } from "../actions/login";
-import { REGISTER_SUCCESS } from "../actions/register";
 
 const userInitialState = {
   data: {
@@ -119,13 +117,7 @@ export const userReducer = (state = userInitialState, action) => {
         },
       };
     }
-    case REGISTER_SUCCESS: {
-      return {
-        ...state,
-        loggedIn: true,
-      };
-    }
-    case LOGIN_SUCCESS: {
+    case LOGGED_IN: {
       return {
         ...state,
         loggedIn: true,

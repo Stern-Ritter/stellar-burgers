@@ -44,7 +44,10 @@ export const resetPasswordFormReducer = (
     }
     case RESET_PASSWORD_FORM_CLEAR_STATE: {
       return {
-        ...resetPasswordFormInitialState,
+        ...state,
+        data: {
+          ...resetPasswordFormInitialState.data,
+        },
       };
     }
     case RESET_PASSWORD_FORM_SET_VALUE: {

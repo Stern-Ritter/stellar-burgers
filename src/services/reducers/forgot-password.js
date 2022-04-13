@@ -43,7 +43,10 @@ export const forgotPasswordFormReducer = (
     }
     case FORGOT_PASSWORD_FORM_CLEAR_STATE: {
       return {
-        ...forgotPasswordFormInitialState,
+        ...state,
+        data: {
+          ...forgotPasswordFormInitialState.data,
+        },
       };
     }
     case FORGOT_PASSWORD_FORM_SET_VALUE: {

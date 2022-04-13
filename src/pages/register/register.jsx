@@ -11,8 +11,6 @@ import {
   setRegisterFormValue,
   register,
 } from "../../services/actions/register";
-import { getCookie } from "../../utils/cookies";
-import { accessTokenKey } from "../../utils/constants";
 import styles from "./register.module.css";
 
 function Register() {
@@ -22,6 +20,7 @@ function Register() {
     dispatch({ type: REGISTER_FORM_CLEAR_STATE });
   }, [dispatch]);
 
+  const loggedIn = useSelector((store) => store.user.loggedIn);
   const {
     data: { name, email, password },
     loading,
@@ -39,7 +38,7 @@ function Register() {
     dispatch(register({ email, password, name }));
   };
 
-  if (getCookie(accessTokenKey)) {
+  if (loggedIn) {
     return <Redirect to="/" />;
   }
 

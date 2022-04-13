@@ -12,6 +12,9 @@ import {
   LOGOUT_FAILED,
 } from "../actions/user";
 
+import { LOGIN_SUCCESS } from "../actions/login";
+import { REGISTER_SUCCESS } from "../actions/register";
+
 const userInitialState = {
   data: {
     name: "",
@@ -23,6 +26,8 @@ const userInitialState = {
     email: "",
     password: "",
   },
+
+  loggedIn: false,
 
   getUserRequest: false,
   getUserRequestSuccess: false,
@@ -112,6 +117,18 @@ export const userReducer = (state = userInitialState, action) => {
           ...userInitialState.form,
           ...state.data,
         },
+      };
+    }
+    case REGISTER_SUCCESS: {
+      return {
+        ...state,
+        loggedIn: true,
+      };
+    }
+    case LOGIN_SUCCESS: {
+      return {
+        ...state,
+        loggedIn: true,
       };
     }
     case LOGOUT: {

@@ -21,6 +21,7 @@ function Login() {
     dispatch({ type: LOGIN_FORM_CLEAR_STATE });
   }, [dispatch]);
 
+  const loggedIn = useSelector((store) => store.user.loggedIn);
   const {
     data: { email, password },
     loading,
@@ -38,7 +39,7 @@ function Login() {
     dispatch(login({ email, password }));
   };
 
-  if (success) {
+  if (loggedIn) {
     return <Redirect to={state?.from || "/"} />;
   }
 

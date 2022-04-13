@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "../protected-route/protected-route";
 import AppHeader from "../app-header/app-header";
@@ -11,59 +10,38 @@ import ResetPassword from "../../pages/reset-password/reset-password";
 import Profile from "../../pages/profile/profile";
 import Ingredient from "../../pages/ingredient/ingredient";
 import NotFound from "../../pages/not-found/not-found";
-import { getIngredients } from "../../services/actions";
 
 function App() {
-  const { hasError } = useSelector((store) => store.ingredients);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
   return (
-    <>
-      {hasError ? (
-        <>
-          <h1>Что-то пошло не так...</h1>
-          <p>
-            В приложении произошла ошибка. Пожалуйста, перезагрузите страницу.
-          </p>
-        </>
-      ) : (
-        <>
-          <Router>
-            <AppHeader />
-            <Switch>
-              <Route path="/" exact>
-                <Main />
-              </Route>
-              <Route path="/login" exact>
-                <Login />
-              </Route>
-              <Route path="/register" exact>
-                <Register />
-              </Route>
-              <Route path="/forgot-password" exact>
-                <ForgotPassword />
-              </Route>
-              <Route path="/reset-password" exact>
-                <ResetPassword />
-              </Route>
-              <ProtectedRoute path="/profile" exact>
-                <Profile />
-              </ProtectedRoute>
-              <Route path="/ingredients/:id" exact>
-                <Ingredient />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
-          </Router>
-        </>
-      )}
-    </>
+    <Router>
+      <AppHeader />
+      <Switch>
+        <Route path="/" exact>
+          <Main />
+        </Route>
+        <Route path="/login" exact>
+          <Login />
+        </Route>
+        <Route path="/register" exact>
+          <Register />
+        </Route>
+        <Route path="/forgot-password" exact>
+          <ForgotPassword />
+        </Route>
+        <Route path="/reset-password" exact>
+          <ResetPassword />
+        </Route>
+        <ProtectedRoute path="/profile">
+          <Profile />
+        </ProtectedRoute>
+        <Route path="/ingredients/:id" exact>
+          <Ingredient />
+        </Route>
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

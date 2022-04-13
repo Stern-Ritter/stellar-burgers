@@ -5,7 +5,6 @@ import {
   accessTokenKey,
   refreshTokenKey,
 } from "../../utils/constants";
-import { LOGGED_IN } from "./user";
 
 export const REGISTER = "REGISTER";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -35,7 +34,6 @@ export function register(form) {
 
         dispatch({ type: REGISTER_SUCCESS });
         dispatch({ type: REGISTER_FORM_CLEAR_STATE });
-        dispatch({ type: LOGGED_IN });
       } else {
         dispatch({ type: REGISTER_FAILED });
       }

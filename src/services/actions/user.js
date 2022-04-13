@@ -25,7 +25,6 @@ export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 export const UPDATE_USER_FORM_SET_VALUE = "UPDATE_USER_FORM_SET_VALUE";
 export const UPDATE_USER_FORM_CLEAR_STATE = "UPDATE_USER_FORM_CLEAR_STATE";
 
-export const LOGGED_IN = "LOGGED_IN";
 export const LOGOUT = "LOGOUT";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
@@ -37,8 +36,7 @@ export function setUpdateUserFormValue({ field, value }) {
   };
 }
 
-export function refreshToken() {
-  return async function (dispatch) {
+export async function refreshToken() {
     const token = getStorageItem(refreshTokenKey);
     const data = await refreshTokenRequest(token);
     if (data?.success && data?.accessToken && data?.refreshToken) {
@@ -46,9 +44,7 @@ export function refreshToken() {
       const refreshToken = data.refreshToken;
       setCookie(accessTokenKey, accessToken);
       setStorageItem(refreshTokenKey, refreshToken);
-      dispatch({ type: LOGGED_IN });
     }
-  };
 }
 
 export function getUser() {
@@ -59,14 +55,13 @@ export function getUser() {
       const data = await getUserRequest(token);
       if (data?.success && data?.user) {
         dispatch({ type: GET_USER_SUCCESS, payload: data.user });
-        dispatch({ type: LOGGED_IN })
       } else {
         dispatch({ type: GET_USER_FAILED });
       }
     } catch (err) {
       try {
         if (err === "Ошибка: 403") {
-          await dispatch(refreshToken());
+          await refreshToken();
           const token = getCookie(accessTokenKey);
           const data = await getUserRequest(token);
           if (data?.success && data?.user) {
@@ -89,14 +84,13 @@ export function updateUser(form) {
       const data = await updateUserRequest(form, token);
       if (data?.success && data?.user) {
         dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
-        dispatch({ type: LOGGED_IN })
       } else {
         dispatch({ type: UPDATE_USER_FAILED });
       }
     } catch (err) {
       try {
         if (err === "Ошибка: 403") {
-          await dispatch(refreshToken());
+          await refreshToken();
           const token = getCookie(accessTokenKey);
           const data = await updateUserRequest(form, token);
           if (data?.success && data?.user) {

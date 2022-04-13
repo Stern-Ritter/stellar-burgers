@@ -10,6 +10,8 @@ import {
   setResetPasswordFormValue,
   resetPassword,
 } from "../../services/actions/reset-password";
+import { getStorageItem } from "../../utils/storage";
+import { refreshTokenKey } from "../../utils/constants";
 import styles from "./reset-password.module.css";
 
 function ResetPassword() {
@@ -19,7 +21,6 @@ function ResetPassword() {
     dispatch({ type: RESET_PASSWORD_FORM_CLEAR_STATE });
   }, [dispatch]);
 
-  const loggedIn = useSelector((store) => store.user.loggedIn);
   const {
     data: { password, token },
     loading,
@@ -42,7 +43,7 @@ function ResetPassword() {
     dispatch(resetPassword({ password, token }));
   };
 
-  if (loggedIn) {
+  if (getStorageItem(refreshTokenKey)) {
     return <Redirect to="/" />;
   }
 

@@ -5,7 +5,6 @@ import {
   accessTokenKey,
   refreshTokenKey,
 } from "../../utils/constants";
-import { LOGGED_IN } from "./user";
 
 export const LOGIN = "LOGIN";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -35,7 +34,6 @@ export function login(form) {
 
         dispatch({ type: LOGIN_SUCCESS });
         dispatch({ type: LOGIN_FORM_CLEAR_STATE });
-        dispatch({ type: LOGGED_IN });
       } else {
         dispatch({ type: LOGIN_FAILED });
       }

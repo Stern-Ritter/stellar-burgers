@@ -10,6 +10,8 @@ import {
   setForgotPasswordFormValue,
   forgotPassword,
 } from "../../services/actions/forgot-password";
+import { getStorageItem } from "../../utils/storage";
+import { refreshTokenKey } from "../../utils/constants";
 import styles from "./forgot-password.module.css";
 
 function ForgotPassword() {
@@ -19,7 +21,6 @@ function ForgotPassword() {
     dispatch({ type: FORGOT_PASSWORD_FORM_CLEAR_STATE });
   }, [dispatch]);
 
-  const loggedIn = useSelector((store) => store.user.loggedIn);
   const {
     data: { email },
     loading,
@@ -39,7 +40,7 @@ function ForgotPassword() {
     dispatch(forgotPassword({ email }));
   };
 
-  if (loggedIn) {
+  if (getStorageItem(refreshTokenKey)) {
     return <Redirect to="/" />;
   }
 

@@ -7,7 +7,6 @@ import {
   UPDATE_USER_FAILED,
   UPDATE_USER_FORM_SET_VALUE,
   UPDATE_USER_FORM_CLEAR_STATE,
-  LOGGED_IN,
   LOGOUT,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
@@ -24,8 +23,6 @@ const userInitialState = {
     email: "",
     password: "",
   },
-
-  loggedIn: false,
 
   getUserRequest: false,
   getUserRequestSuccess: false,
@@ -115,12 +112,6 @@ export const userReducer = (state = userInitialState, action) => {
           ...userInitialState.form,
           ...state.data,
         },
-      };
-    }
-    case LOGGED_IN: {
-      return {
-        ...state,
-        loggedIn: true,
       };
     }
     case LOGOUT: {

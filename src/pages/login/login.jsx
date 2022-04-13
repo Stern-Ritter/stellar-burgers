@@ -11,6 +11,8 @@ import {
   setLoginFormValue,
   login,
 } from "../../services/actions/login";
+import { getStorageItem } from '../../utils/storage';
+import { refreshTokenKey } from '../../utils/constants';
 import styles from "./login.module.css";
 
 function Login() {
@@ -21,7 +23,6 @@ function Login() {
     dispatch({ type: LOGIN_FORM_CLEAR_STATE });
   }, [dispatch]);
 
-  const loggedIn = useSelector((store) => store.user.loggedIn);
   const {
     data: { email, password },
     loading,
@@ -39,7 +40,7 @@ function Login() {
     dispatch(login({ email, password }));
   };
 
-  if (loggedIn) {
+  if (getStorageItem(refreshTokenKey)) {
     return <Redirect to={state?.from || "/"} />;
   }
 

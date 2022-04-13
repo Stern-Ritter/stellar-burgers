@@ -37,7 +37,7 @@ function AppHeader() {
               activeClassName={styles.activeLink}
             >
               <ListIcon
-                type={pathname === "/orders" ? "primary" : "secondary"}
+                type={pathname === "/feed" ? "primary" : "secondary"}
               />
               Лента заказов
             </NavLink>

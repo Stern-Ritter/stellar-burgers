@@ -1,21 +1,15 @@
 import React, { useRef, useMemo, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import {
-  SET_SELECTED_INGREDIENT,
-  REMOVE_SELECTED_INGREDIENT,
-} from "../../services/actions/burger-ingredients";
 import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients() {
+  const history = useHistory();
+
   const ingredientsData = useSelector((store) => store.ingredients.data);
   const ingredients = useSelector((store) => store.constructorIngredients);
-  const dispatch = useDispatch();
-
-  const selectedIngredient = useSelector((store) => store.selectedIngredient);
 
   const [currentCategory, setCurrentCategory] = useState("bun");
   const categories = useMemo(
@@ -54,12 +48,7 @@ function BurgerIngredients() {
   };
 
   const openHandler = (id) => {
-    const ingredient = ingredientsData.find((el) => el._id === id);
-    dispatch({ type: SET_SELECTED_INGREDIENT, ingredient });
-  };
-
-  const closeHandler = () => {
-    dispatch({ type: REMOVE_SELECTED_INGREDIENT });
+    history.push({ pathname: `/ingredients/${id}`, state: { type: 'modal' } });
   };
 
   const scrollHandler = () => {
@@ -106,11 +95,6 @@ function BurgerIngredients() {
           );
         })}
       </ul>
-      {selectedIngredient && (
-        <Modal title="Детали ингредиента" closeHandler={closeHandler}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </section>
   );
 }

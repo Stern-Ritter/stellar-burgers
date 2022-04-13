@@ -14,8 +14,12 @@ function Profile() {
           <ProfileNavigation />
           <ProfileForm />
         </Route>
-        <Route path={`${path}/orders`} exact>{null}</Route>
-        <Route path={`${path}/orders/:id`} exact>{null}</Route>
+        <Route path={`${path}/orders`} exact>
+          <ProfileNavigation />
+        </Route>
+        <Route path={`${path}/orders/:id`} exact>
+          {null}
+        </Route>
       </Switch>
     </div>
   );

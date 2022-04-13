@@ -5,5 +5,12 @@
 }
 
 .link {
+  font-size: 18px;
   color: #f2f2f3;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.link:hover {
+  opacity: 0.6;
 }

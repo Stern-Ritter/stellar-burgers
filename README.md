@@ -10,3 +10,7 @@ Stellar Burgers — приложением космической бургерн
 * grid,
 * JavaScript,
 * React.
+
+**Github-pages**
+
+- [Ссылка на github-pages.] (https://stern-ritter.github.io/react-burgers/)

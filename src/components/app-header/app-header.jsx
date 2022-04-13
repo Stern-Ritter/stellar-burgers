@@ -15,7 +15,7 @@ function AppHeader() {
     <header className={styles.header}>
       <nav className={styles.menu + " pt-4 pb-4"}>
         <ul className={styles.list}>
-          <li className={styles["list-item"] + " pl-5 pr-5 pt-4 pb-4"}>
+          <li className={styles.item}>
             <NavLink
               to="/"
               exact
@@ -42,10 +42,10 @@ function AppHeader() {
               Лента заказов
             </NavLink>
           </li>
-          <li className={styles["list-item"] + " pl-5 pr-5 pt-4 pb-4"}>
+          <li className={styles.logo}>
             <Logo />
           </li>
-          <li className={styles["list-item"] + " pl-5 pr-5 pt-4 pb-4"}>
+          <li className={styles.item}>
             <NavLink
               to="/profile"
               className={

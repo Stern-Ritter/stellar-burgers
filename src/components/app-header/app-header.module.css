@@ -16,11 +16,16 @@
   align-items: center;
 }
 
-.list-item {
+.item {
   display: flex;
 }
 
+.logo {
+  padding-right: 180px;
+}
+
 .link {
+  padding: 20px;
   display: flex;
   align-items: center;
   text-decoration: none;

@@ -114,7 +114,7 @@ export function logout(history) {
       if (data?.success) {
         deleteCookie(accessTokenKey);
         removeStorageItem(refreshTokenKey);
-        history.replace({ pathname: "/" });
+        history.push({ pathname: "/login" });
         dispatch({ type: LOGOUT_SUCCESS });
       } else {
         dispatch({ type: LOGOUT_FAILED });

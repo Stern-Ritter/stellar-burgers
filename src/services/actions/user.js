@@ -13,7 +13,6 @@ import {
 import {
   accessTokenKey,
   refreshTokenKey,
-  cookieExpires,
 } from "../../utils/constants";
 
 export const GET_USER = "GET_USER";
@@ -45,7 +44,7 @@ export function refreshToken() {
     if (data?.success && data?.accessToken && data?.refreshToken) {
       const accessToken = data.accessToken.split("Bearer ")[1];
       const refreshToken = data.refreshToken;
-      setCookie(accessTokenKey, accessToken, { expires: cookieExpires });
+      setCookie(accessTokenKey, accessToken);
       setStorageItem(refreshTokenKey, refreshToken);
       dispatch({ type: LOGGED_IN });
     }

@@ -4,7 +4,6 @@ import { setStorageItem } from "../../utils/storage";
 import {
   accessTokenKey,
   refreshTokenKey,
-  cookieExpires,
 } from "../../utils/constants";
 import { LOGGED_IN } from "./user";
 
@@ -31,7 +30,7 @@ export function register(form) {
       if (data?.success && data?.accessToken && data?.refreshToken) {
         const accessToken = data.accessToken.split("Bearer ")[1];
         const refreshToken = data.refreshToken;
-        setCookie(accessTokenKey, accessToken, { expires: cookieExpires });
+        setCookie(accessTokenKey, accessToken);
         setStorageItem(refreshTokenKey, refreshToken);
 
         dispatch({ type: REGISTER_SUCCESS });

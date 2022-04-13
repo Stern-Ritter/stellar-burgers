@@ -29,7 +29,7 @@ function AppHeader() {
               Конструктор
             </NavLink>
             <NavLink
-              to="/orders"
+              to="/feed"
               exact
               className={
                 styles.link + " text text_type_main-default text_color_inactive"

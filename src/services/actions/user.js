@@ -63,15 +63,19 @@ export function getUser() {
         dispatch({ type: GET_USER_FAILED });
       }
     } catch (err) {
-      if (err === "Ошибка: 403") {
-        await refreshToken();
-        const token = getCookie(accessTokenKey);
-        const data = await getUserRequest(token);
-        if (data?.success && data?.user) {
-          dispatch({ type: GET_USER_SUCCESS, payload: data.user });
+      try {
+        if (err === "Ошибка: 403") {
+          await refreshToken();
+          const token = getCookie(accessTokenKey);
+          const data = await getUserRequest(token);
+          if (data?.success && data?.user) {
+            dispatch({ type: GET_USER_SUCCESS, payload: data.user });
+          }
         }
+        dispatch({ type: GET_USER_FAILED });
+      } catch (err) {
+        dispatch({ type: GET_USER_FAILED });
       }
-      dispatch({ type: GET_USER_FAILED });
     }
   };
 }
@@ -88,15 +92,19 @@ export function updateUser(form) {
         dispatch({ type: UPDATE_USER_FAILED });
       }
     } catch (err) {
-      if (err === "Ошибка: 403") {
-        await refreshToken();
-        const token = getCookie(accessTokenKey);
-        const data = await updateUserRequest(form, token);
-        if (data?.success && data?.user) {
-          dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
+      try {
+        if (err === "Ошибка: 403") {
+          await refreshToken();
+          const token = getCookie(accessTokenKey);
+          const data = await updateUserRequest(form, token);
+          if (data?.success && data?.user) {
+            dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
+          }
         }
+        dispatch({ type: UPDATE_USER_FAILED });
+      } catch (err) {
+        dispatch({ type: UPDATE_USER_FAILED });
       }
-      dispatch({ type: UPDATE_USER_FAILED });
     }
   };
 }

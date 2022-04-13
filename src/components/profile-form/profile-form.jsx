@@ -26,8 +26,12 @@ function ProfileForm() {
     (store) => store.user.updateUserRequestFailed
   );
 
-  const isUserDataAndUserFormMatch = useMemo(() => {
-    return userData.name === userForm.name && userData.email === userForm.email;
+  const isUserDataAndUserFormNotMatch = useMemo(() => {
+    return (
+      userData.name !== userForm.name ||
+      userData.email !== userForm.email ||
+      userForm.password !== ""
+    );
   }, [userData, userForm]);
 
   const onFormChange = (evt) => {
@@ -78,14 +82,14 @@ function ProfileForm() {
           onChange={onFormChange}
         />
 
-        {!isUserDataAndUserFormMatch && (
+        {isUserDataAndUserFormNotMatch && (
           <Button type="primary" size="medium" disabled={updateUserRequest}>
             Сохранить
           </Button>
         )}
       </form>
 
-      {!isUserDataAndUserFormMatch && (
+      {isUserDataAndUserFormNotMatch && (
         <Button
           type="primary"
           size="medium"

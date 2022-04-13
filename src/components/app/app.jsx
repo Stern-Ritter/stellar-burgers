@@ -32,8 +32,8 @@ function App() {
         </>
       ) : (
         <>
-          <AppHeader />
           <Router>
+            <AppHeader />
             <Switch>
               <Route path="/" exact>
                 <Main />

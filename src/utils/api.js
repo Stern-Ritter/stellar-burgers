@@ -81,7 +81,7 @@ async function getUserRequest(token) {
     method: "GET",
     headers: {
       ...headers,
-      authorization: token
+      authorization: `Bearer ${token}`
     },
   });
   const data = await checkResponse(res, "application/json");
@@ -90,11 +90,11 @@ async function getUserRequest(token) {
 
 async function updateUserRequest(form, token) {
   const res = await fetch(`${API}/auth/user `, {
-    method: "POST",
+    method: "PATCH",
     body: JSON.stringify(form),
     headers: {
       ...headers,
-      authorization: token
+      authorization: `Bearer ${token}`
     },
   });
   const data = await checkResponse(res, "application/json");

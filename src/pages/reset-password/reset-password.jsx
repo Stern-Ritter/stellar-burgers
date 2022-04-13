@@ -19,12 +19,16 @@ function ResetPassword() {
     dispatch({ type: RESET_PASSWORD_FORM_CLEAR_STATE });
   }, [dispatch]);
 
+  const loggedIn = useSelector((store) => store.user.loggedIn);
   const {
     data: { password, token },
     loading,
     success,
     hasError,
   } = useSelector((store) => store.resetPasswordForm);
+  const forgotPasswordSuccess = useSelector(
+    (store) => store.forgotPasswordForm.success
+  );
 
   const onFormChange = (evt) => {
     const input = evt.target;
@@ -37,6 +41,14 @@ function ResetPassword() {
     evt.preventDefault();
     dispatch(resetPassword({ password, token }));
   };
+
+  if (loggedIn) {
+    return <Redirect to="/" />;
+  }
+
+  if (!forgotPasswordSuccess) {
+    return <Redirect to="/forgot-password" />;
+  }
 
   return (
     <form className={styles.form} onSubmit={onFormSubmit}>

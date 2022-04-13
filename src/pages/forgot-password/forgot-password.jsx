@@ -19,6 +19,7 @@ function ForgotPassword() {
     dispatch({ type: FORGOT_PASSWORD_FORM_CLEAR_STATE });
   }, [dispatch]);
 
+  const loggedIn = useSelector((store) => store.user.loggedIn);
   const {
     data: { email },
     loading,
@@ -37,6 +38,14 @@ function ForgotPassword() {
     evt.preventDefault();
     dispatch(forgotPassword({ email }));
   };
+
+  if (loggedIn) {
+    return <Redirect to="/" />;
+  }
+
+  if (success) {
+    return <Redirect to="/reset-password" />;
+  }
 
   return (
     <form className={styles.form} onSubmit={onFormSubmit}>

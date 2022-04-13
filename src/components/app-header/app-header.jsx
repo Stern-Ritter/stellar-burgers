@@ -1,32 +1,67 @@
 import React from "react";
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink, useLocation } from "react-router-dom";
+import {
+  Logo,
+  BurgerIcon,
+  ListIcon,
+  ProfileIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 
 function AppHeader() {
+  const { pathname } = useLocation();
+
   return (
     <header className={styles.header}>
       <nav className={styles.menu + " pt-4 pb-4"}>
         <ul className={styles.list}>
           <li className={styles["list-item"] + " pl-5 pr-5 pt-4 pb-4"}>
-            <a href="#" className={styles.link + " mr-2"}>
-              <BurgerIcon type="primary" />
-              <p className="text text_type_main-default ml-2">Конструктор</p>
-            </a>
-            <a href="#" className={styles.link}>
-              <ListIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive ml-2">Лента заказов</p>
-            </a>
+            <NavLink
+              to="/"
+              exact
+              className={
+                styles.link +
+                " text text_type_main-default text_color_inactive mr-2"
+              }
+              activeClassName={styles.activeLink}
+            >
+              <BurgerIcon type={pathname === "/" ? "primary" : "secondary"} />
+              Конструктор
+            </NavLink>
+            <NavLink
+              to="/orders"
+              exact
+              className={
+                styles.link + " text text_type_main-default text_color_inactive"
+              }
+              activeClassName={styles.activeLink}
+            >
+              <ListIcon
+                type={pathname === "/orders" ? "primary" : "secondary"}
+              />
+              Лента заказов
+            </NavLink>
           </li>
           <li className={styles["list-item"] + " pl-5 pr-5 pt-4 pb-4"}>
-            <a href="#" className={styles.link}>
-              <Logo />
-            </a>
+            <Logo />
           </li>
           <li className={styles["list-item"] + " pl-5 pr-5 pt-4 pb-4"}>
-            <a href="#" className={styles.link}>
-              <ProfileIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</p>
-            </a>
+            <NavLink
+              to="/profile"
+              className={
+                styles.link + " text text_type_main-default text_color_inactive"
+              }
+              activeClassName={styles.activeLink}
+            >
+              <ProfileIcon
+                type={
+                  pathname === "/profile" || pathname === "/profile/orders"
+                    ? "primary"
+                    : "secondary"
+                }
+              />
+              Личный кабинет
+            </NavLink>
           </li>
         </ul>
       </nav>

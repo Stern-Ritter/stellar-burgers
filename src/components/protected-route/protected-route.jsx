@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import { getUser } from "../../services/actions/user";
@@ -9,7 +9,7 @@ function ProtectedRoute({ children, ...rest }) {
   const [isUserLoaded, setUserLoaded] = useState(false);
   const { name, email } = useSelector((store) => store.user.data);
 
-  const init = () => {
+  const init = async () => {
     await dispatch(getUser());
     setUserLoaded(true);
   }

@@ -1,0 +1,25 @@
+.orders-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 20px 0;
+  box-sizing: border-box;
+}
+
+.title {
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.orders {
+  display: grid;
+  grid-template-columns: 608px 580px;
+  column-gap: 60px;
+}
+
+.order-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 120px;
+  display: flex;
+  justify-content: center;
+}

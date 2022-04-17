@@ -42,6 +42,7 @@ export async function refreshToken() {
     if (data?.success && data?.accessToken && data?.refreshToken) {
       const accessToken = data.accessToken.split("Bearer ")[1];
       const refreshToken = data.refreshToken;
+      deleteCookie(accessTokenKey);
       setCookie(accessTokenKey, accessToken);
       setStorageItem(refreshTokenKey, refreshToken);
     }

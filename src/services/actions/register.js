@@ -1,5 +1,5 @@
 import { registerRequest } from "../../utils/api";
-import { setCookie } from "../../utils/cookies";
+import { setCookie, deleteCookie } from "../../utils/cookies";
 import { setStorageItem } from "../../utils/storage";
 import {
   accessTokenKey,
@@ -29,6 +29,7 @@ export function register(form) {
       if (data?.success && data?.accessToken && data?.refreshToken) {
         const accessToken = data.accessToken.split("Bearer ")[1];
         const refreshToken = data.refreshToken;
+        deleteCookie(accessTokenKey);
         setCookie(accessTokenKey, accessToken);
         setStorageItem(refreshTokenKey, refreshToken);
 

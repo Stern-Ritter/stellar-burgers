@@ -10,6 +10,7 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Profile from "../../pages/profile/profile";
 import Ingredient from "../../pages/ingredient/ingredient";
+import Orders from "../../pages/orders/orders";
 import NotFound from "../../pages/not-found/not-found";
 import { getIngredients } from "../../services/actions";
 
@@ -42,6 +43,9 @@ function App() {
         <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
+        <Route path="/feed">
+          <Orders />
+        </Route>
         <Route path="/ingredients/:id" exact>
           <Ingredient />
         </Route>

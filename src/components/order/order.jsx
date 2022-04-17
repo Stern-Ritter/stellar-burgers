@@ -23,24 +23,26 @@ function Order(options) {
   const displayedStatus = statuses[status];
   const mappedIngredients = useMemo(
     () =>
-      Object.values(
-        ingredients
-          .map((ingredient) => {
-            return ingredientsData.find(
-              (element) => element._id === ingredient
-            );
-          })
-          .reduce((accIngredients, current) => {
-            accIngredients[current.name] = accIngredients[current.name]
-              ? {
-                  ...accIngredients[current.name],
-                  count: accIngredients[current.name].count + 1,
-                }
-              : { ...current, count: 1 };
-            return accIngredients;
-          }, {})
-      ).sort((ingredient) => (ingredient.type === "bun" ? -1 : 1)),
-    [ingredientsData]
+      ingredients.length && ingredientsData.length
+        ? Object.values(
+            ingredients
+              .map((ingredient) => {
+                return ingredientsData.find(
+                  (element) => element._id === ingredient
+                );
+              })
+              .reduce((accIngredients, current) => {
+                accIngredients[current.name] = accIngredients[current.name]
+                  ? {
+                      ...accIngredients[current.name],
+                      count: accIngredients[current.name].count + 1,
+                    }
+                  : { ...current, count: 1 };
+                return accIngredients;
+              }, {})
+          ).sort((ingredient) => (ingredient.type === "bun" ? -1 : 1))
+        : [],
+    [ingredients, ingredientsData]
   );
 
   const amount = useMemo(() => {

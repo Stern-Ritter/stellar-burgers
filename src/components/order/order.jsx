@@ -1,49 +1,85 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { statuses } from "../../utils/constants";
+import toDateString from "../../utils/toDateString";
 import styles from "./order.module.css";
 
 function Order(options) {
   const {
-    id,
+    _id,
     number,
-    date,
-    title,
-    ingredients,
-    amount,
+    name,
+    createdAt,
     status,
+    ingredients,
     type,
     clickHandler,
   } = options;
 
-  const limitExceeding = ingredients.length - 6;
-  const limitedIngredients = ingredients.slice(0, 6);
+  const ingredientsData = useSelector((store) => store.ingredients.data);
+
+  const date = toDateString(createdAt);
+  const displayedStatus = statuses[status];
+  const mappedIngredients = useMemo(
+    () =>
+      Object.values(
+        ingredients
+          .map((ingredient) => {
+            return ingredientsData.find(
+              (element) => element._id === ingredient
+            );
+          })
+          .reduce((accIngredients, current) => {
+            accIngredients[current.name] = accIngredients[current.name]
+              ? {
+                  ...accIngredients[current.name],
+                  count: accIngredients[current.name].count + 1,
+                }
+              : { ...current, count: 1 };
+            return accIngredients;
+          }, {})
+      ).sort((ingredient) => (ingredient.type === "bun" ? -1 : 1)),
+    [ingredientsData]
+  );
+
+  const amount = useMemo(() => {
+    return mappedIngredients.reduce(
+      (sum, current) => (sum += current.count * current.price),
+      0
+    );
+  }, [mappedIngredients]);
+
+  const limitExceeding = useMemo(
+    () => mappedIngredients.length - 6,
+    [mappedIngredients]
+  );
+
+  const limitedIngredients = useMemo(
+    () => mappedIngredients.slice(0, 6),
+    [mappedIngredients]
+  );
+
+  const nameStyles = `text text_type_main-medium ${
+    type === "enhanced" ? " mb-2" : " mb-6"
+  }`;
+
+  const statusStyles = `text text_type_main-default mb-6 ${
+    status === "done" ? styles.done : ""
+  }`;
 
   return (
-    <div className={styles.order + " p-6"} onClick={() => clickHandler(id)}>
+    <div className={styles.order + " p-6"} onClick={() => clickHandler(_id)}>
       <div className={styles.row + " mb-6"}>
         <p className="text text_type_digits-default">{`#${number}`}</p>
         <p className="text text_type_main-default text_color_inactive">
           {date}
         </p>
       </div>
-      <h3
-        className={
-          "text text_type_main-medium" +
-          (type === "enhanced" ? " mb-2" : " mb-6")
-        }
-      >
-        {title}
-      </h3>
-      {type === "enhanced" && (
-        <p
-          className={
-            "text text_type_main-default mb-6 " +
-            (status === "Выполнен" ? styles.done : "")
-          }
-        >
-          {status}
-        </p>
-      )}
+
+      <h3 className={nameStyles}>{name}</h3>
+      {type === "enhanced" && <p className={statusStyles}>{displayedStatus}</p>}
+
       <div className={styles.row}>
         <ul className={styles.ingredients}>
           {limitedIngredients.map((ingredient, idx) => (
@@ -56,8 +92,8 @@ function Order(options) {
             >
               <div className={styles["ingredient-holder"]}>
                 <img
-                  src={ingredient}
-                  alt={ingredient}
+                  src={ingredient.image_mobile}
+                  alt={ingredient.name}
                   className={styles.ingredient}
                   style={{
                     opacity: idx === 5 && limitExceeding > 0 ? 0.6 : 1,

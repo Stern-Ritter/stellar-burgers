@@ -3,7 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import styles from "./order.module.css";
 
 function Order(options) {
-  const { number, date, title, ingredients, amount } = options;
+  const { number, date, title, ingredients, amount, status, type } = options;
 
   const limitExceeding = ingredients.length - 6;
   const limitedIngredients = ingredients.slice(0, 6);
@@ -16,11 +16,29 @@ function Order(options) {
           {date}
         </p>
       </div>
-      <h3 className="text text_type_main-medium mb-6">{title}</h3>
+      <h3
+        className={
+          "text text_type_main-medium" +
+          (type === "enhanced" ? " mb-2" : " mb-6")
+        }
+      >
+        {title}
+      </h3>
+      {type === "enhanced" && (
+        <p
+          className={
+            "text text_type_main-default mb-6 " +
+            (status === "Выполнен" ? styles.done : "")
+          }
+        >
+          {status}
+        </p>
+      )}
       <div className={styles.row}>
         <ul className={styles.ingredients}>
           {limitedIngredients.map((ingredient, idx) => (
             <li
+              key={idx}
               className={styles.item}
               style={{
                 zIndex: ingredients.length - idx,

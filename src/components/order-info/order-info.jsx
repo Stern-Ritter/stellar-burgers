@@ -69,13 +69,18 @@ function OrderInfo() {
         className={styles.number + " text text_type_digits-default mb-10"}
       >{`#${number}`}</p>
       <p className="text text_type_main-medium mb-3">{name}</p>
-      <p className={styles.status + " text text_type_main-default mb-15"}>
+      <p
+        className={
+          " text text_type_main-default mb-15 " +
+          (status === "Выполнен" ? styles.done : "")
+        }
+      >
         {status}
       </p>
       <p className="text text_type_main-medium">Состав:</p>
       <ul className={styles.list}>
-        {composition.map((ingredient) => (
-          <li className={styles.row + " mb-4"}>
+        {composition.map((ingredient, idx) => (
+          <li key={idx} className={styles.row + " mb-4"}>
             <div className={styles["image-background"] + " mr-4"}>
               <div className={styles["image-wrapper"]}>
                 <img

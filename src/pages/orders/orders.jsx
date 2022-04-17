@@ -1,12 +1,27 @@
 import React from "react";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  useHistory,
+  useParams,
+  useLocation,
+  useRouteMatch,
+} from "react-router-dom";
 import OrdersList from "../../components/orders-list/orders-list";
 import OrdersStatus from "../../components/orders-status/orders-status";
 import OrderInfo from "../../components/order-info/order-info";
+import Modal from "../../components/modal/modal";
 import styles from "./orders.module.css";
 
 function Orders() {
+  const history = useHistory();
+  const { id } = useParams();
+  const { state } = useLocation();
   const { path } = useRouteMatch();
+
+  const closeHandler = () => {
+    history.goBack();
+  };
 
   return (
     <>
@@ -17,15 +32,24 @@ function Orders() {
               Лента заказов
             </h1>
             <div className={styles.orders}>
-              <OrdersList type={'simple'}/>
+              <OrdersList type={"simple"} path={path} />
               <OrdersStatus />
             </div>
           </div>
         </Route>
+
         <Route path={`${path}/:id`}>
-          <div className={styles["order-container"]}>
-            <OrderInfo />
-          </div>
+          {state?.type === "modal" ? (
+            <Modal closeHandler={closeHandler}>
+              <div className={styles["modal-container"]}>
+                <OrderInfo type="modal" />
+              </div>
+            </Modal>
+          ) : (
+            <div className={styles["order-container"]}>
+              <OrderInfo />
+            </div>
+          )}
         </Route>
       </Switch>
     </>

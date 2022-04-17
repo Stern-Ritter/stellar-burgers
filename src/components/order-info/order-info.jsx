@@ -2,7 +2,7 @@ import React from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order-info.module.css";
 
-function OrderInfo() {
+function OrderInfo({ type }) {
   const info = {
     number: "034533",
     name: "Black Hole Singularity острый бургер",
@@ -66,7 +66,10 @@ function OrderInfo() {
   return (
     <div>
       <p
-        className={styles.number + " text text_type_digits-default mb-10"}
+        className={
+          " text text_type_digits-default mb-10 " +
+          (type === "modal" ? "" : styles.number)
+        }
       >{`#${number}`}</p>
       <p className="text text_type_main-medium mb-3">{name}</p>
       <p

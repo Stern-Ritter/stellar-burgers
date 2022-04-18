@@ -1,7 +1,15 @@
-.container {
+.profile-form-container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 120px 20px 0;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.orders-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 20px 0;
   display: flex;
   box-sizing: border-box;
 }

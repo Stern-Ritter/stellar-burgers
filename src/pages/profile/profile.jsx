@@ -50,14 +50,14 @@ function Profile() {
   return connected ? (
     <Switch>
       <Route path={path} exact>
-        <div className={styles.container}>
-          <ProfileNavigation />
+        <div className={styles["profile-form-container"]}>
+          <ProfileNavigation type={"form"}/>
           <ProfileForm />
         </div>
       </Route>
       <Route path={`${path}/orders`} exact>
-        <div className={styles.container}>
-          <ProfileNavigation />
+        <div className={styles["orders-container"]}>
+          <ProfileNavigation type={"orders"}/>
           <OrdersList orders={orders} type="enhanced" path={`${path}/orders`} />
         </div>
       </Route>

@@ -9,7 +9,7 @@
 }
 
 .item {
-  margin: 17px 0;
+  padding: 17px 0;
 }
 
 .link {
@@ -35,6 +35,6 @@
 }
 
 .description {
-  margin: 80px 0 0 0;
+  padding: 80px 0 0 0;
   opacity: 0.4;
 }

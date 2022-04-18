@@ -12,7 +12,7 @@
 
 .orders {
   display: grid;
-  grid-template-columns: 608px 580px;
+  grid-template-columns: 600px 580px;
   column-gap: 60px;
 }
 

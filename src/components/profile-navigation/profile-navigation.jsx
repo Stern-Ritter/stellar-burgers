@@ -4,7 +4,7 @@ import { useHistory, NavLink } from "react-router-dom";
 import { logout } from "../../services/actions/user";
 import styles from "./profile-navigation.module.css";
 
-function ProfileNavigation() {
+function ProfileNavigation({ type }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -13,7 +13,11 @@ function ProfileNavigation() {
   };
 
   return (
-    <div className={styles.container + " mr-15"}>
+    <div
+      className={
+        styles.container + ` mr-15 ${type === "orders" ? " pt-20" : ""}`
+      }
+    >
       <ul className={styles.links}>
         <li className={styles.item}>
           <NavLink
@@ -57,8 +61,14 @@ function ProfileNavigation() {
           " text text_type_main-default text_color_inactive"
         }
       >
-        В&nbsp;этом разделе вы&nbsp;можете изменить&nbsp;свои персональные
-        данные
+        {type === "form" ? (
+          <span>
+            В&nbsp;этом разделе вы&nbsp;можете изменить&nbsp;свои персональные
+            данные
+          </span>
+        ) : (
+          <span>В этом разделе вы можете просмотреть свою историю заказов</span>
+        )}
       </p>
     </div>
   );

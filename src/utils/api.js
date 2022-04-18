@@ -103,6 +103,21 @@ async function updateUserRequest(form, token) {
   return data;
 }
 
+async function postOrder(ingredients, token) {
+  const res = await fetch(`${API}/orders`, {
+    method: 'POST',
+    body: JSON.stringify({
+      ingredients: [ingredients.bun, ...ingredients.main],
+    }),
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`
+    },
+  });
+  const data = await checkResponse(res, "application/json");
+  return data;
+}
+
 const dataPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -125,6 +140,7 @@ export {
   updateUserRequest,
   resetPasswordRequest,
   updatePasswordRequest,
+  postOrder,
   API,
   wsAllOrdersAPI,
   wsUserOrdersAPI,

@@ -1,6 +1,7 @@
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
+import { useHistory } from 'react-router-dom';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -15,12 +16,16 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
 } from "../../services/actions/burger-constructor";
+import { getStorageItem } from "../../utils/storage";
+import { refreshTokenKey } from "../../utils/constants";
 import styles from "./burger-constructor.module.css";
 
 function BurgerConstructor() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const ingredientsData = useSelector((store) => store.ingredients.data);
   const ingredients = useSelector((store) => store.constructorIngredients);
-  const dispatch = useDispatch();
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
@@ -67,8 +72,12 @@ function BurgerConstructor() {
   );
 
   const submitOrder = async () => {
-    setVisibleModal(true);
-    dispatch(getOrder(ingredients));
+    if(getStorageItem(refreshTokenKey)) {
+      setVisibleModal(true);
+      dispatch(getOrder(ingredients));
+    } else {
+      history.push({ pathname : '/login'});
+    }
   };
 
   const closeHandler = () => {

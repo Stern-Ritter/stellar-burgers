@@ -16,13 +16,22 @@
   align-items: center;
 }
 
-.list-item {
+.item {
   display: flex;
 }
 
+.logo {
+  padding-right: 180px;
+}
+
 .link {
+  padding: 20px;
   display: flex;
   align-items: center;
-  color: #F2F2F3;
   text-decoration: none;
+  gap: 8px;
+}
+
+.activeLink {
+  color: #F2F2F3;
 }

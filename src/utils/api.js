@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 
 const API = "https://norma.nomoreparties.space/api";
-const wsAPI = 'wss://norma.nomoreparties.space/orders';
+const wsAllOrdersAPI = 'wss://norma.nomoreparties.space/orders/all';
+const wsUserOrdersAPI = 'wss://norma.nomoreparties.space/orders';
 
 const headers = {
   "Content-Type": "application/json",
@@ -125,7 +126,8 @@ export {
   resetPasswordRequest,
   updatePasswordRequest,
   API,
-  wsAPI,
+  wsAllOrdersAPI,
+  wsUserOrdersAPI,
   checkResponse,
   dataPropTypes,
 };

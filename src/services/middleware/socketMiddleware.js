@@ -3,12 +3,21 @@ export function socketMiddleware(wsUrl, wsActions) {
     let socket = null;
 
     return (next) => (action) => {
-      const { dispatch, getState } = store;
-      const { type } = action;
-      const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
+      const { dispatch } = store;
+      const { type, payload } = action;
+      const { wsInit, onOpen, onClosing, onClose, onError, onMessage } =
+        wsActions;
 
       if (type === wsInit) {
-        socket = new WebSocket(wsUrl);
+        if (payload?.token) {
+          socket = new WebSocket(`${wsUrl}?token=${payload.token}`);
+        } else {
+          socket = new WebSocket(wsUrl);
+        }
+      }
+
+      if (type === onClosing) {
+        socket.close(1000, "App closed");
       }
 
       if (socket) {

@@ -26,12 +26,14 @@ function Orders() {
 
   useEffect(() => {
     dispatch(wsAllOrdersConnectionStart());
+
     return () => {
       dispatch(wsAllOrdersConnectionClosing());
     };
   }, []);
 
   const connected = useSelector((store) => store.allOrders.wsConnected);
+  const orders = useSelector((store) => store.allOrders.orders);
 
   const closeHandler = () => {
     history.goBack();
@@ -45,7 +47,7 @@ function Orders() {
             Лента заказов
           </h1>
           <div className={styles.orders}>
-            <OrdersList type={"simple"} path={path} />
+            <OrdersList orders={orders} type={"simple"} path={path} />
             <OrdersStatus />
           </div>
         </div>
@@ -55,12 +57,12 @@ function Orders() {
         {state?.type === "modal" ? (
           <Modal closeHandler={closeHandler}>
             <div className={styles["modal-container"]}>
-              <OrderInfo type="modal" />
+              <OrderInfo orders={orders} type="modal" />
             </div>
           </Modal>
         ) : (
           <div className={styles["order-container"]}>
-            <OrderInfo />
+            <OrderInfo orders={orders} />
           </div>
         )}
       </Route>

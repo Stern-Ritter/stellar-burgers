@@ -6,10 +6,9 @@ import { statuses } from "../../utils/constants";
 import toDateString from "../../utils/toDateString";
 import styles from "./order-info.module.css";
 
-function OrderInfo({ type }) {
+function OrderInfo({ orders, type }) {
   const { id } = useParams();
 
-  const orders = useSelector((store) => store.allOrders.orders);
   const ingredientsData = useSelector((store) => store.ingredients.data);
 
   const selectedOrder = useMemo(() => {

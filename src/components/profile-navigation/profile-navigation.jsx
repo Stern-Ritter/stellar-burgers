@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
 import { logout } from "../../services/actions/user";
+import PropTypes from "prop-types";
 import styles from "./profile-navigation.module.css";
 
 function ProfileNavigation({ type }) {
@@ -73,5 +74,9 @@ function ProfileNavigation({ type }) {
     </div>
   );
 }
+
+ProfileNavigation.propTypes = {
+  type: PropTypes.string.isRequired,
+};
 
 export default ProfileNavigation;

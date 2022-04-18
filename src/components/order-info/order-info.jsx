@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { statuses } from "../../utils/constants";
 import toDateString from "../../utils/toDateString";
+import { orderPropTypes } from "../../utils/api";
+import PropTypes from "prop-types";
 import styles from "./order-info.module.css";
 
 function OrderInfo({ orders, type }) {
@@ -108,5 +110,10 @@ function OrderInfo({ orders, type }) {
     null
   );
 }
+
+OrderInfo.propTypes = {
+  orders: PropTypes.arrayOf(orderPropTypes).isRequired,
+  type: PropTypes.string,
+};
 
 export default OrderInfo;

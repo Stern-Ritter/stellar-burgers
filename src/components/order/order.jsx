@@ -3,19 +3,12 @@ import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { statuses } from "../../utils/constants";
 import toDateString from "../../utils/toDateString";
+import { orderPropTypes } from "../../utils/api";
+import PropTypes from "prop-types";
 import styles from "./order.module.css";
 
-function Order(options) {
-  const {
-    _id,
-    number,
-    name,
-    createdAt,
-    status,
-    ingredients,
-    type,
-    clickHandler,
-  } = options;
+function Order({ order, type, clickHandler }) {
+  const { _id, number, name, createdAt, status, ingredients } = order;
 
   const ingredientsData = useSelector((store) => store.ingredients.data);
 
@@ -118,5 +111,11 @@ function Order(options) {
     </div>
   );
 }
+
+Order.propTypes = {
+  order: orderPropTypes.isRequired,
+  type: PropTypes.string.isRequired,
+  clickHandler: PropTypes.func.isRequired,
+};
 
 export default Order;

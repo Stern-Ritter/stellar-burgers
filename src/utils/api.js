@@ -131,6 +131,15 @@ const dataPropTypes = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
 });
 
+const orderPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+});
+
 export {
   registerRequest,
   loginRequest,
@@ -146,4 +155,5 @@ export {
   wsUserOrdersAPI,
   checkResponse,
   dataPropTypes,
+  orderPropTypes,
 };

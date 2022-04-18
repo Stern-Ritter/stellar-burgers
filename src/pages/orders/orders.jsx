@@ -14,7 +14,7 @@ import Modal from "../../components/modal/modal";
 import Loader from "../../components/loader/loader";
 import {
   wsAllOrdersConnectionStart,
-  wsAllOrdersConnectionClosed,
+  wsAllOrdersConnectionClosing
 } from "../../services/actions/all-orders";
 import styles from "./orders.module.css";
 
@@ -27,7 +27,7 @@ function Orders() {
   useEffect(() => {
     dispatch(wsAllOrdersConnectionStart());
     return () => {
-      dispatch(wsAllOrdersConnectionClosed());
+      dispatch(wsAllOrdersConnectionClosing());
     };
   }, []);
 

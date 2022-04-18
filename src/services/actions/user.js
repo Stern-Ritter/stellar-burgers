@@ -68,8 +68,9 @@ export function getUser() {
           if (data?.success && data?.user) {
             dispatch({ type: GET_USER_SUCCESS, payload: data.user });
           }
+        } else {
+          dispatch({ type: GET_USER_FAILED });
         }
-        dispatch({ type: GET_USER_FAILED });
       } catch (err) {
         dispatch({ type: GET_USER_FAILED });
       }
@@ -97,8 +98,9 @@ export function updateUser(form) {
           if (data?.success && data?.user) {
             dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
           }
+        } else {
+          dispatch({ type: UPDATE_USER_FAILED });
         }
-        dispatch({ type: UPDATE_USER_FAILED });
       } catch (err) {
         dispatch({ type: UPDATE_USER_FAILED });
       }

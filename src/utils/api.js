@@ -103,7 +103,7 @@ async function updateUserRequest(form, token) {
   return data;
 }
 
-async function postOrder(ingredients, token) {
+async function postOrderRequest(ingredients, token) {
   const res = await fetch(`${API}/orders`, {
     method: 'POST',
     body: JSON.stringify({
@@ -140,7 +140,7 @@ export {
   updateUserRequest,
   resetPasswordRequest,
   updatePasswordRequest,
-  postOrder,
+  postOrderRequest,
   API,
   wsAllOrdersAPI,
   wsUserOrdersAPI,

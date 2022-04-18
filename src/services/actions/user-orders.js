@@ -11,9 +11,9 @@ export const wsUserOrdersConnectionStart = () => {
   };
 };
 
-export const wsUserOrdersConnectionClosed = () => {
+export const wsUserOrdersConnectionClosing = () => {
   return {
-    type: WS_USER_ORDERS_CONNECTION_CLOSED,
+    type: WS_USER_ORDERS_CONNECTION_CLOSING,
   };
 };
 

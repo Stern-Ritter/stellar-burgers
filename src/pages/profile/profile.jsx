@@ -41,7 +41,7 @@ function Profile() {
   }, [user]);
 
   const connected = useSelector((store) => store.userOrders.wsConnected);
-  const orders = useSelector((store) => store.userOrders.orders);
+  const orders = useSelector((store) => store.userOrders.orders.reverse());
 
   const closeHandler = () => {
     history.goBack();

@@ -53,7 +53,7 @@ function Orders() {
         </div>
       </Route>
 
-      <Route path={`${path}/:id`}>
+      <Route path={`${path}/:id`} exact>
         {state?.type === "modal" ? (
           <Modal closeHandler={closeHandler}>
             <div className={styles["modal-container"]}>

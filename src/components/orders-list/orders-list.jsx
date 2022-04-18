@@ -1,10 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Order from "../order/order";
 import styles from "./orders-list.module.css";
 
-function OrdersList({ orders, type, path }) {
+function OrdersList({ type, path }) {
   const history = useHistory();
+
+  const orders = useSelector((store) => store.allOrders.orders);
 
   const clickHandler = (id) => {
     history.push({ pathname: `${path}/${id}`, state: { type: 'modal' }})

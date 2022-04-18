@@ -5,9 +5,10 @@ export const WS_USER_ORDERS_CONNECTION_CLOSING = "WS_USER_ORDERS_CONNECTION_CLOS
 export const WS_USER_ORDERS_CONNECTION_CLOSED = "WS_USER_ORDERS_CONNECTION_CLOSED";
 export const WS_USER_ORDERS_GET_ORDER = "WS_USER_ORDERS_GET_ORDER";
 
-export const wsUserOrdersConnectionStart = () => {
+export const wsUserOrdersConnectionStart = (token) => {
   return {
     type: WS_USER_ORDERS_CONNECTION_START,
+    payload: { token }
   };
 };
 

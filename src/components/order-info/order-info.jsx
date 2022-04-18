@@ -1,88 +1,75 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { statuses } from "../../utils/constants";
+import toDateString from "../../utils/toDateString";
 import styles from "./order-info.module.css";
 
 function OrderInfo({ type }) {
-  const info = {
-    number: "034533",
-    name: "Black Hole Singularity острый бургер",
-    status: "Выполнен",
-    composition: [
-      {
-        name: "Флюоресцентная булка R2-D3",
-        image: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
-        count: 2,
-        price: 20,
-      },
-      {
-        name: "Филе Люминесцентного тетраодонтимформа",
-        image: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-        count: 1,
-        price: 300,
-      },
-      {
-        name: "Соус традиционный галактический",
-        image: "https://code.s3.yandex.net/react/code/sauce-03-mobile.png",
-        count: 1,
-        price: 30,
-      },
-      {
-        name: "Плоды Фалленианского дерева",
-        image: "https://code.s3.yandex.net/react/code/sp_1-mobile.png",
-        count: 1,
-        price: 80,
-      },
-      {
-        name: "Флюоресцентная булка R2-D3",
-        image: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
-        count: 2,
-        price: 20,
-      },
-      {
-        name: "Филе Люминесцентного тетраодонтимформа",
-        image: "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-        count: 1,
-        price: 300,
-      },
-      {
-        name: "Соус традиционный галактический",
-        image: "https://code.s3.yandex.net/react/code/sauce-03-mobile.png",
-        count: 1,
-        price: 30,
-      },
-      {
-        name: "Плоды Фалленианского дерева",
-        image: "https://code.s3.yandex.net/react/code/sp_1-mobile.png",
-        count: 1,
-        price: 80,
-      },
-    ],
-    date: "Вчера, 13:50 i-GMT+3",
-    total: 510,
-  };
+  const { id } = useParams();
 
-  const { number, name, status, composition, date, total } = info;
+  const orders = useSelector((store) => store.allOrders.orders);
+  const ingredientsData = useSelector((store) => store.ingredients.data);
 
-  return (
-    <div>
+  const selectedOrder = useMemo(() => {
+    return orders.find((order) => order._id === id);
+  }, [id, orders]);
+
+  const date = selectedOrder && toDateString(selectedOrder.createdAt);
+  const displayedStatus = selectedOrder && statuses[selectedOrder.status];
+
+  const mappedIngredients = useMemo(
+    () =>
+      selectedOrder
+        ? Object.values(
+            selectedOrder.ingredients
+              .map((ingredient) => {
+                return ingredientsData.find(
+                  (element) => element._id === ingredient
+                );
+              })
+              .reduce((accIngredients, current) => {
+                accIngredients[current.name] = accIngredients[current.name]
+                  ? {
+                      ...accIngredients[current.name],
+                      count: accIngredients[current.name].count + 1,
+                    }
+                  : { ...current, count: 1 };
+                return accIngredients;
+              }, {})
+          ).sort((ingredient) => (ingredient.type === "bun" ? -1 : 1))
+        : [],
+    [selectedOrder, ingredientsData]
+  );
+
+  const amount = useMemo(() => {
+    return mappedIngredients.reduce(
+      (sum, current) => (sum += current.count * current.price),
+      0
+    );
+  }, [mappedIngredients]);
+
+  return selectedOrder ? (
+    <div className={styles.container}>
       <p
         className={
           " text text_type_digits-default mb-10 " +
           (type === "modal" ? "" : styles.number)
         }
-      >{`#${number}`}</p>
-      <p className="text text_type_main-medium mb-3">{name}</p>
+      >{`#${selectedOrder.number}`}</p>
+      <p className="text text_type_main-medium mb-3">{selectedOrder.name}</p>
       <p
         className={
           " text text_type_main-default mb-15 " +
-          (status === "Выполнен" ? styles.done : "")
+          (selectedOrder.status === "Выполнен" ? styles.done : "")
         }
       >
-        {status}
+        {displayedStatus}
       </p>
       <p className="text text_type_main-medium">Состав:</p>
       <ul className={styles.list}>
-        {composition.map((ingredient, idx) => (
+        {mappedIngredients.map((ingredient, idx) => (
           <li key={idx} className={styles.row + " mb-4"}>
             <div className={styles["image-background"] + " mr-4"}>
               <div className={styles["image-wrapper"]}>
@@ -113,11 +100,13 @@ function OrderInfo({ type }) {
           {date}
         </p>
         <div className={styles.row}>
-          <p className="text text_type_digits-default mr-2">{total}</p>
+          <p className="text text_type_digits-default mr-2">{amount}</p>
           <CurrencyIcon type="primary" />
         </div>
       </div>
     </div>
+  ) : (
+    null
   );
 }
 

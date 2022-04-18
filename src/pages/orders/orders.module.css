@@ -29,3 +29,9 @@
   display: flex;
   justify-content: center;
 }
+
+.loader-container {
+  padding-top: 20%;
+  display: flex;
+  justify-content: center;
+}

@@ -24,7 +24,7 @@ import styles from "./profile.module.css";
 function Profile() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { state } = useLocation();
+  const location = useLocation();
   const { path } = useRouteMatch();
 
   const user = useSelector((store) => store.user.data);
@@ -47,35 +47,45 @@ function Profile() {
     history.goBack();
   };
 
-  return connected ? (
-    <Switch>
-      <Route path={path} exact>
-        <div className={styles["profile-form-container"]}>
-          <ProfileNavigation type={"form"}/>
-          <ProfileForm />
-        </div>
-      </Route>
-      <Route path={`${path}/orders`} exact>
-        <div className={styles["orders-container"]}>
-          <ProfileNavigation type={"orders"}/>
-          <OrdersList orders={orders} type="enhanced" path={`${path}/orders`} />
-        </div>
-      </Route>
+  const order = location.state && location.state.order;
 
-      <Route path={`${path}/orders/:id`} exact>
-        {state?.type === "modal" ? (
+  return connected ? (
+    <>
+      <Switch location={order || location}>
+        <Route path={path} exact>
+          <div className={styles["profile-form-container"]}>
+            <ProfileNavigation type={"form"} />
+            <ProfileForm />
+          </div>
+        </Route>
+        <Route path={`${path}/orders`} exact>
+          <div className={styles["orders-container"]}>
+            <ProfileNavigation type={"orders"} />
+            <OrdersList
+              orders={orders}
+              type="enhanced"
+              path={`${path}/orders`}
+            />
+          </div>
+        </Route>
+
+        <Route path={`${path}/orders/:id`} exact>
+          <div className={styles["order-container"]}>
+            <OrderInfo orders={orders} />
+          </div>
+        </Route>
+      </Switch>
+
+      {order && (
+        <Route path={`${path}/orders/:id`} exact>
           <Modal closeHandler={closeHandler}>
             <div className={styles["modal-container"]}>
               <OrderInfo orders={orders} type="modal" />
             </div>
           </Modal>
-        ) : (
-          <div className={styles["order-container"]}>
-            <OrderInfo orders={orders} />
-          </div>
-        )}
-      </Route>
-    </Switch>
+        </Route>
+      )}
+    </>
   ) : (
     <div className={styles["loader-container"]}>
       <Loader />

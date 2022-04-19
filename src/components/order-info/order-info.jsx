@@ -63,7 +63,7 @@ function OrderInfo({ orders, type }) {
       <p
         className={
           " text text_type_main-default mb-15 " +
-          (selectedOrder.status === "Выполнен" ? styles.done : "")
+          (selectedOrder.status === "done" ? styles.done : "")
         }
       >
         {displayedStatus}

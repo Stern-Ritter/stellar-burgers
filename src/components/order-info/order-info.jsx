@@ -71,7 +71,7 @@ function OrderInfo({ orders, type }) {
       <p className="text text_type_main-medium">Состав:</p>
       <ul className={styles.list}>
         {mappedIngredients.map((ingredient, idx) => (
-          <li key={idx} className={styles.row + " mb-4"}>
+          <li key={idx} className={styles.item}>
             <div className={styles["image-background"] + " mr-4"}>
               <div className={styles["image-wrapper"]}>
                 <img

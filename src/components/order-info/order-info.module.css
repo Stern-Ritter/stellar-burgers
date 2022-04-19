@@ -21,6 +21,17 @@
   list-style-type: none;
 }
 
+.item {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item:last-of-type {
+  margin-bottom: 0;
+}
+
 .row {
   display: flex;
   justify-content: space-between;

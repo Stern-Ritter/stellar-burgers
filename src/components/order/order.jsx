@@ -24,6 +24,7 @@ function Order({ order, type, clickHandler }) {
                   (element) => element._id === ingredient
                 );
               })
+              .filter((ingredient) => ingredient !== undefined)
               .reduce((accIngredients, current) => {
                 accIngredients[current.name] = accIngredients[current.name]
                   ? {

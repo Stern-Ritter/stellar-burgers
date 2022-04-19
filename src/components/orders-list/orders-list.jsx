@@ -1,15 +1,16 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Order from "../order/order";
 import { orderPropTypes } from "../../utils/api";
 import PropTypes from "prop-types";
 import styles from "./orders-list.module.css";
 
 function OrdersList({ orders, type, path }) {
+  const location = useLocation();
   const history = useHistory();
 
   const clickHandler = (id) => {
-    history.push({ pathname: `${path}/${id}`, state: { type: 'modal' }})
+    history.push({ pathname: `${path}/${id}`, state: { order: location }})
   }
 
   return (

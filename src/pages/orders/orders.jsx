@@ -21,7 +21,7 @@ import styles from "./orders.module.css";
 function Orders() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { state } = useLocation();
+  const location = useLocation();
   const { path } = useRouteMatch();
 
   useEffect(() => {
@@ -39,34 +39,40 @@ function Orders() {
     history.goBack();
   };
 
-  return connected ? (
-    <Switch>
-      <Route path={path} exact>
-        <div className={styles["orders-container"]}>
-          <h1 className={styles.title + " text text_type_main-large"}>
-            Лента заказов
-          </h1>
-          <div className={styles.orders}>
-            <OrdersList orders={orders} type={"simple"} path={path} />
-            <OrdersStatus />
-          </div>
-        </div>
-      </Route>
+  const order = location.state && location.state.order;
 
-      <Route path={`${path}/:id`} exact>
-        {state?.type === "modal" ? (
+  return connected ? (
+    <>
+      <Switch location={order || location}>
+        <Route path={path} exact>
+          <div className={styles["orders-container"]}>
+            <h1 className={styles.title + " text text_type_main-large"}>
+              Лента заказов
+            </h1>
+            <div className={styles.orders}>
+              <OrdersList orders={orders} type={"simple"} path={path} />
+              <OrdersStatus />
+            </div>
+          </div>
+        </Route>
+
+        <Route path={`${path}/:id`} exact>
+          <div className={styles["order-container"]}>
+            <OrderInfo orders={orders} />
+          </div>
+        </Route>
+      </Switch>
+
+      {order && (
+        <Route path={`${path}/:id`} exact>
           <Modal closeHandler={closeHandler}>
             <div className={styles["modal-container"]}>
               <OrderInfo orders={orders} type="modal" />
             </div>
           </Modal>
-        ) : (
-          <div className={styles["order-container"]}>
-            <OrderInfo orders={orders} />
-          </div>
-        )}
-      </Route>
-    </Switch>
+        </Route>
+      )}
+    </>
   ) : (
     <div className={styles["loader-container"]}>
       <Loader />

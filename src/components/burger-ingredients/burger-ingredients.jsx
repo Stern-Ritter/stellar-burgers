@@ -1,12 +1,12 @@
 import React, { useRef, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useLocation} from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
 
 function BurgerIngredients() {
-  let location = useLocation();
+  const location = useLocation();
   const history = useHistory();
 
   const ingredientsData = useSelector((store) => store.ingredients.data);

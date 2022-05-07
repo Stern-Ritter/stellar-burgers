@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 const API = "https://norma.nomoreparties.space/api";
 const wsAllOrdersAPI = "wss://norma.nomoreparties.space/orders/all";
 const wsUserOrdersAPI = "wss://norma.nomoreparties.space/orders";
@@ -8,17 +6,17 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-function checkResponse(res, type) {
+function checkResponse(res: Response, type: string) {
   const status = res.ok;
   const contentType = res.headers.get("content-type");
-  if (status && contentType.includes(type)) {
+  if (status && contentType?.includes(type)) {
     return res.json();
   } else {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 }
 
-async function resetPasswordRequest(form) {
+async function resetPasswordRequest(form: TResetPasswordForm) {
   const res = await fetch(`${API}/password-reset/reset`, {
     method: "POST",
     body: JSON.stringify(form),
@@ -28,7 +26,7 @@ async function resetPasswordRequest(form) {
   return data;
 }
 
-async function updatePasswordRequest(form) {
+async function updatePasswordRequest(form: TForgotPasswordForm) {
   const res = await fetch(`${API}/password-reset`, {
     method: "POST",
     body: JSON.stringify(form),
@@ -38,7 +36,7 @@ async function updatePasswordRequest(form) {
   return data;
 }
 
-async function registerRequest(form) {
+async function registerRequest(form: TRegisterForm) {
   const res = await fetch(`${API}/auth/register`, {
     method: "POST",
     body: JSON.stringify(form),
@@ -48,7 +46,7 @@ async function registerRequest(form) {
   return data;
 }
 
-async function loginRequest(form) {
+async function loginRequest(form: TLoginForm) {
   const res = await fetch(`${API}/auth/login`, {
     method: "POST",
     body: JSON.stringify(form),
@@ -58,7 +56,7 @@ async function loginRequest(form) {
   return data;
 }
 
-async function logoutRequest(token) {
+async function logoutRequest(token: string) {
   const res = await fetch(`${API}/auth/logout`, {
     method: "POST",
     body: JSON.stringify({ token }),
@@ -68,7 +66,7 @@ async function logoutRequest(token) {
   return data;
 }
 
-async function refreshTokenRequest(token) {
+async function refreshTokenRequest(token: string) {
   const res = await fetch(`${API}/auth/token `, {
     method: "POST",
     body: JSON.stringify({ token }),
@@ -78,7 +76,7 @@ async function refreshTokenRequest(token) {
   return data;
 }
 
-async function getUserRequest(token) {
+async function getUserRequest(token: string) {
   const res = await fetch(`${API}/auth/user `, {
     method: "GET",
     headers: {
@@ -90,7 +88,7 @@ async function getUserRequest(token) {
   return data;
 }
 
-async function updateUserRequest(form, token) {
+async function updateUserRequest(form: TUpdateUserForm, token: string) {
   const res = await fetch(`${API}/auth/user `, {
     method: "PATCH",
     body: JSON.stringify(form),
@@ -103,7 +101,7 @@ async function updateUserRequest(form, token) {
   return data;
 }
 
-async function postOrderRequest(ingredients, token) {
+async function postOrderRequest(ingredients: TIngredients, token: string) {
   const res = await fetch(`${API}/orders`, {
     method: "POST",
     body: JSON.stringify({
@@ -117,28 +115,6 @@ async function postOrderRequest(ingredients, token) {
   const data = await checkResponse(res, "application/json");
   return data;
 }
-
-const dataPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-});
-
-const orderPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
-});
 
 export {
   registerRequest,
@@ -154,6 +130,4 @@ export {
   wsAllOrdersAPI,
   wsUserOrdersAPI,
   checkResponse,
-  dataPropTypes,
-  orderPropTypes,
 };

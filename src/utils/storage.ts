@@ -1,11 +1,11 @@
-export function setStorageItem(key, item) {
+export function setStorageItem(key: string, item: string) {
   localStorage.setItem(key, JSON.stringify(item));
 }
 
-export function getStorageItem(key) {
-  return JSON.parse(localStorage.getItem(key));
+export function getStorageItem(key: string): string {
+  return JSON.parse(localStorage.getItem(key) ?? '');
 }
 
-export function removeStorageItem(key) {
+export function removeStorageItem(key: string) {
   localStorage.removeItem(key);
 }

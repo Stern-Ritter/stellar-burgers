@@ -6,7 +6,7 @@ import {
 } from "date-fns";
 import { ru } from "date-fns/locale";
 
-function toDateString(createdAt) {
+function toDateString(createdAt: string) {
   const createdAtDate = new Date(createdAt);
   const date = isToday(createdAtDate)
     ? "Сегодня"

@@ -1,7 +1,7 @@
 import {
-  GET_ORDER,
-  GET_ORDER_SUCCESS,
-  GET_ORDER_FAILED,
+  POST_ORDER,
+  POST_ORDER_SUCCESS,
+  POST_ORDER_FAILED,
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   SHIFT_INGREDIENT,
@@ -57,7 +57,7 @@ export const constructorReducer = (state = constructorInitialState, action) => {
 
 export const orderReducer = (state = orderInitialState, action) => {
   switch (action.type) {
-    case GET_ORDER: {
+    case POST_ORDER: {
       return {
         ...state,
         loading: true,
@@ -65,14 +65,14 @@ export const orderReducer = (state = orderInitialState, action) => {
         data: null,
       };
     }
-    case GET_ORDER_SUCCESS: {
+    case POST_ORDER_SUCCESS: {
       return {
         ...state,
         loading: false,
         data: action.data,
       };
     }
-    case GET_ORDER_FAILED: {
+    case POST_ORDER_FAILED: {
       return {
         ...orderInitialState,
         hasError: true,

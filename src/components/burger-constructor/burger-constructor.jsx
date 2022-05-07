@@ -12,7 +12,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import BurgerConstructorStub from "../burger-constructor-stub/burger-constructor-stub";
 import {
-  getOrder,
+  postOrder,
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
 } from "../../services/actions/burger-constructor";
@@ -74,7 +74,7 @@ function BurgerConstructor() {
   const submitOrder = async () => {
     if(getStorageItem(refreshTokenKey)) {
       setVisibleModal(true);
-      dispatch(getOrder(ingredients));
+      dispatch(postOrder(ingredients));
     } else {
       history.push({ pathname : '/login'});
     }

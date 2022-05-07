@@ -10,6 +10,8 @@ import { registerFormReducer } from "./register";
 import { loginFormReducer } from "./login";
 import { forgotPasswordFormReducer } from "./forgot-password";
 import { resetPasswordFormReducer } from "./reset-password";
+import { allOrdersWsReducer } from "./all-orders";
+import { userOrdersWsReducer } from "./user-orders";
 
 const initialState = {
   loading: false,
@@ -54,4 +56,6 @@ export const rootReducer = combineReducers({
   loginForm : loginFormReducer,
   forgotPasswordForm: forgotPasswordFormReducer,
   resetPasswordForm: resetPasswordFormReducer,
+  allOrders: allOrdersWsReducer,
+  userOrders: userOrdersWsReducer
 });

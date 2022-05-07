@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 
 const API = "https://norma.nomoreparties.space/api";
+const wsAllOrdersAPI = "wss://norma.nomoreparties.space/orders/all";
+const wsUserOrdersAPI = "wss://norma.nomoreparties.space/orders";
 
 const headers = {
   "Content-Type": "application/json",
@@ -81,7 +83,7 @@ async function getUserRequest(token) {
     method: "GET",
     headers: {
       ...headers,
-      authorization: `Bearer ${token}`
+      authorization: `Bearer ${token}`,
     },
   });
   const data = await checkResponse(res, "application/json");
@@ -94,7 +96,22 @@ async function updateUserRequest(form, token) {
     body: JSON.stringify(form),
     headers: {
       ...headers,
-      authorization: `Bearer ${token}`
+      authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await checkResponse(res, "application/json");
+  return data;
+}
+
+async function postOrderRequest(ingredients, token) {
+  const res = await fetch(`${API}/orders`, {
+    method: "POST",
+    body: JSON.stringify({
+      ingredients: [ingredients.bun, ingredients.bun, ...ingredients.main],
+    }),
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
     },
   });
   const data = await checkResponse(res, "application/json");
@@ -114,6 +131,15 @@ const dataPropTypes = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
 });
 
+const orderPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+});
+
 export {
   registerRequest,
   loginRequest,
@@ -123,7 +149,11 @@ export {
   updateUserRequest,
   resetPasswordRequest,
   updatePasswordRequest,
+  postOrderRequest,
   API,
+  wsAllOrdersAPI,
+  wsUserOrdersAPI,
   checkResponse,
   dataPropTypes,
+  orderPropTypes,
 };

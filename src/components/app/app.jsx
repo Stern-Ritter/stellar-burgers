@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import ProtectedRoute from "../protected-route/protected-route";
 import AppHeader from "../app-header/app-header";
 import Main from "../../pages/main/main";
@@ -10,20 +10,30 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Profile from "../../pages/profile/profile";
 import Ingredient from "../../pages/ingredient/ingredient";
+import Orders from "../../pages/orders/orders";
 import NotFound from "../../pages/not-found/not-found";
+import Modal from "../../components/modal/modal";
 import { getIngredients } from "../../services/actions";
 
 function App() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
+  const closeHandler = () => {
+    history.goBack();
+  };
+
+  const background = location.state && location.state.background;
+
   return (
-    <Router>
+    <>
       <AppHeader />
-      <Switch>
+      <Switch location={background || location}>
         <Route path="/" exact>
           <Main />
         </Route>
@@ -42,6 +52,9 @@ function App() {
         <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
+        <Route path="/feed">
+          <Orders />
+        </Route>
         <Route path="/ingredients/:id" exact>
           <Ingredient />
         </Route>
@@ -49,7 +62,15 @@ function App() {
           <NotFound />
         </Route>
       </Switch>
-    </Router>
+
+      {background && (
+        <Route path="/ingredients/:id" exact>
+          <Modal title="Детали ингредиента" closeHandler={closeHandler}>
+            <Ingredient type={"modal"} />
+          </Modal>
+        </Route>
+      )}
+    </>
   );
 }
 

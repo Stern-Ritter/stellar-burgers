@@ -12,7 +12,7 @@ import Profile from "../../pages/profile/profile";
 import Ingredient from "../../pages/ingredient/ingredient";
 import Orders from "../../pages/orders/orders";
 import NotFound from "../../pages/not-found/not-found";
-import Modal from "../../components/modal/modal";
+import Modal from "../modal/modal";
 import { getIngredients } from "../../services/actions";
 
 function App() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { dataPropTypes } from '../../utils/api'
+import { dataPropTypes } from '../../utils/api.ts'
 import PropTypes from "prop-types";
 import styles from "./burger-ingredient.module.css";
 

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { statuses } from "../../utils/constants";
 import toDateString from "../../utils/toDateString";
-import { orderPropTypes } from "../../utils/api";
+import { orderPropTypes } from "../../utils/api.ts";
 import PropTypes from "prop-types";
 import styles from "./order.module.css";
 

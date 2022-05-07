@@ -6,7 +6,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { SHIFT_INGREDIENT } from '../../services/actions/burger-constructor'
-import { dataPropTypes } from '../../utils/api'
+import { dataPropTypes } from '../../utils/api.ts'
 import PropTypes from "prop-types";
 import styles from "./burger-constructor-item.module.css";
 

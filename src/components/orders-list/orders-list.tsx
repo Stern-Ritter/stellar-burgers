@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Order from "../order/order";
-import { orderPropTypes } from "../../utils/api";
+import { orderPropTypes } from "../../utils/api.ts";
 import PropTypes from "prop-types";
 import styles from "./orders-list.module.css";
 

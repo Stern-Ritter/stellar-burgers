@@ -1,5 +1,5 @@
 import React from "react";
-import { dataPropTypes } from "../../utils/api";
+import { dataPropTypes } from "../../utils/api.ts";
 import styles from "./ingredient-details.module.css";
 
 function IngredientDetails({ ingredient }) {

@@ -1,6 +1,6 @@
 import { getCookie } from "../../utils/cookies";
 import { accessTokenKey } from "../../utils/constants";
-import { postOrderRequest } from "../../utils/api";
+import { postOrderRequest } from "../../utils/api.ts";
 
 export const POST_ORDER = "POST_ORDER";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";

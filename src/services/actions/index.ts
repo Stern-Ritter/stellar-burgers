@@ -1,4 +1,4 @@
-import { API, checkResponse } from '../../utils/api';
+import { API, checkResponse } from '../../utils/api.ts';
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';

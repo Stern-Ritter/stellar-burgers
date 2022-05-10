@@ -1,4 +1,4 @@
-import { updatePasswordRequest } from "../../utils/api";
+import { updatePasswordRequest } from "../../utils/api.ts";
 
 export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";

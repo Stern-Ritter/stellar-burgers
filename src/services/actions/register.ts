@@ -1,4 +1,4 @@
-import { registerRequest } from "../../utils/api";
+import { registerRequest } from "../../utils/api.ts";
 import { setCookie, deleteCookie } from "../../utils/cookies";
 import { setStorageItem } from "../../utils/storage";
 import {

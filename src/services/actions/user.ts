@@ -3,7 +3,7 @@ import {
   updateUserRequest,
   refreshTokenRequest,
   logoutRequest,
-} from "../../utils/api";
+} from "../../utils/api.ts";
 import { getCookie, setCookie, deleteCookie } from "../../utils/cookies";
 import {
   getStorageItem,

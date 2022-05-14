@@ -4,9 +4,17 @@ import {
   LOGIN_FAILED,
   LOGIN_FORM_CLEAR_STATE,
   LOGIN_FORM__SET_VALUE,
+  TLoginActions,
 } from "../actions/login";
 
-const loginFormInitialState = {
+type TLoginState = {
+  data: TLoginForm;
+  loading: boolean;
+  success: boolean;
+  hasError: boolean;
+};
+
+const loginFormInitialState: TLoginState = {
   data: {
     email: "",
     password: "",
@@ -16,7 +24,10 @@ const loginFormInitialState = {
   hasError: false,
 };
 
-export const loginFormReducer = (state = loginFormInitialState, action) => {
+export const loginFormReducer = (
+  state = loginFormInitialState,
+  action: TLoginActions
+): TLoginState => {
   switch (action.type) {
     case LOGIN: {
       return {

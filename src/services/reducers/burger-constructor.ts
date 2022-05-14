@@ -5,20 +5,36 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   SHIFT_INGREDIENT,
+  TBurgerConstructorIngredientActions,
+  TBurgerConstructorOrderActions,
 } from "../actions/burger-constructor";
 
-const constructorInitialState = {
-  bun: null,
+type TConstructorState = {
+  bun: string;
+  main: Array<string>;
+};
+
+type TOrderState = {
+  loading: boolean;
+  hasError: boolean;
+  data: { order: TOrder } | null;
+};
+
+const constructorInitialState: TConstructorState = {
+  bun: "",
   main: [],
 };
 
-const orderInitialState = {
+const orderInitialState: TOrderState = {
   loading: false,
   hasError: false,
   data: null,
 };
 
-export const constructorReducer = (state = constructorInitialState, action) => {
+export const constructorReducer = (
+  state = constructorInitialState,
+  action: TBurgerConstructorIngredientActions
+): TConstructorState => {
   switch (action.type) {
     case ADD_INGREDIENT: {
       if (action.ingredient.type === "bun") {
@@ -46,7 +62,7 @@ export const constructorReducer = (state = constructorInitialState, action) => {
       main.splice(action.toIndex, 0, element);
       return {
         ...state,
-        main
+        main,
       };
     }
     default: {
@@ -55,7 +71,10 @@ export const constructorReducer = (state = constructorInitialState, action) => {
   }
 };
 
-export const orderReducer = (state = orderInitialState, action) => {
+export const orderReducer = (
+  state = orderInitialState,
+  action: TBurgerConstructorOrderActions
+): TOrderState => {
   switch (action.type) {
     case POST_ORDER: {
       return {

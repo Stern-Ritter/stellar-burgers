@@ -4,9 +4,17 @@ import {
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_FORM_CLEAR_STATE,
   RESET_PASSWORD_FORM_SET_VALUE,
+  TResetPasswordActions,
 } from "../actions/reset-password";
 
-const resetPasswordFormInitialState = {
+type TResetPasswordState = {
+  data: TResetPasswordForm;
+  loading: boolean;
+  success: boolean;
+  hasError: boolean;
+};
+
+const resetPasswordFormInitialState: TResetPasswordState = {
   data: {
     password: "",
     token: "",
@@ -18,8 +26,8 @@ const resetPasswordFormInitialState = {
 
 export const resetPasswordFormReducer = (
   state = resetPasswordFormInitialState,
-  action
-) => {
+  action: TResetPasswordActions
+): TResetPasswordState => {
   switch (action.type) {
     case RESET_PASSWORD: {
       return {

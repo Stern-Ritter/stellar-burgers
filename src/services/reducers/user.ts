@@ -10,9 +10,25 @@ import {
   LOGOUT,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
+  TUserActions,
 } from "../actions/user";
 
-const userInitialState = {
+type TUserState = {
+  data: Omit<TUpdateUserForm, "password">;
+  form: TUpdateUserForm;
+  getUserRequest: boolean;
+  getUserRequestSuccess: boolean;
+  getUserRequestFailed: boolean;
+
+  updateUserRequest: boolean;
+  updateUserRequestSuccess: boolean;
+  updateUserRequestFailed: boolean;
+
+  logoutRequest: boolean;
+  logoutRequestFailed: boolean;
+};
+
+const userInitialState: TUserState = {
   data: {
     name: "",
     email: "",
@@ -36,7 +52,10 @@ const userInitialState = {
   logoutRequestFailed: false,
 };
 
-export const userReducer = (state = userInitialState, action) => {
+export const userReducer = (
+  state = userInitialState,
+  action: TUserActions
+): TUserState => {
   switch (action.type) {
     case GET_USER: {
       return {
@@ -118,7 +137,6 @@ export const userReducer = (state = userInitialState, action) => {
       return {
         ...state,
         logoutRequest: true,
-        logoutRequestSuccess: false,
         logoutRequestFailed: false,
       };
     }

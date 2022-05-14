@@ -3,10 +3,18 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILED,
   REGISTER_FORM_CLEAR_STATE,
-  REGISTER_FORM__SET_VALUE,
+  REGISTER_FORM_SET_VALUE,
+  TRegisterActions,
 } from "../actions/register";
 
-const registerFormInitialValue = {
+type TRegisterState = {
+  data: TRegisterForm;
+  loading: boolean;
+  success: boolean;
+  hasError: boolean;
+};
+
+const registerFormInitialValue: TRegisterState = {
   data: {
     name: "",
     email: "",
@@ -19,8 +27,8 @@ const registerFormInitialValue = {
 
 export const registerFormReducer = (
   state = registerFormInitialValue,
-  action
-) => {
+  action: TRegisterActions
+): TRegisterState => {
   switch (action.type) {
     case REGISTER: {
       return {
@@ -48,7 +56,7 @@ export const registerFormReducer = (
         ...registerFormInitialValue,
       };
     }
-    case REGISTER_FORM__SET_VALUE: {
+    case REGISTER_FORM_SET_VALUE: {
       return {
         ...state,
         data: {

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, FormEvent, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "../../types";
 import { Link, Redirect } from "react-router-dom";
 import {
   Input,
@@ -14,7 +14,7 @@ import { getStorageItem } from "../../utils/storage";
 import { refreshTokenKey } from "../../utils/constants";
 import styles from "./reset-password.module.css";
 
-function ResetPassword() {
+const ResetPassword = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,14 +31,14 @@ function ResetPassword() {
     (store) => store.forgotPasswordForm.success
   );
 
-  const onFormChange = (evt) => {
+  const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const input = evt.target;
     dispatch(
       setResetPasswordFormValue({ field: input.name, value: input.value })
     );
   };
 
-  const onFormSubmit = (evt) => {
+  const onFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(resetPassword({ password, token }));
   };

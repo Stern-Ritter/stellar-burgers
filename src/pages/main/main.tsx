@@ -1,12 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../types";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import styles from "./main.module.css";
 
-function Main() {
+const Main = () => {
   const hasError = useSelector((store) => store.ingredients.hasError);
 
   return (

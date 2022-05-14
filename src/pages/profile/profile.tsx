@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../types";
+import { Location } from "history";
 import {
   Switch,
   Route,
@@ -21,17 +22,21 @@ import { getCookie } from "../../utils/cookies";
 import { accessTokenKey } from "../../utils/constants";
 import styles from "./profile.module.css";
 
-function Profile() {
+interface IProfileLocation {
+  order: Location;
+}
+
+const Profile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<IProfileLocation>();
   const { path } = useRouteMatch();
 
   const user = useSelector((store) => store.user.data);
 
   useEffect(() => {
     if (user.name && user.email) {
-      const token = getCookie(accessTokenKey);
+      const token = getCookie(accessTokenKey) || "";
       dispatch(wsUserOrdersConnectionStart(token));
 
       return () => {
@@ -91,6 +96,6 @@ function Profile() {
       <Loader />
     </div>
   );
-}
+};
 
 export default Profile;

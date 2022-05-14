@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, FormEvent, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "../../types";
 import { useLocation, Link, Redirect } from "react-router-dom";
 import {
   Input,
@@ -11,13 +11,17 @@ import {
   setLoginFormValue,
   login,
 } from "../../services/actions/login";
-import { getStorageItem } from '../../utils/storage';
-import { refreshTokenKey } from '../../utils/constants';
+import { getStorageItem } from "../../utils/storage";
+import { refreshTokenKey } from "../../utils/constants";
 import styles from "./login.module.css";
 
-function Login() {
+interface ILoginLocation {
+  from: string;
+}
+
+const Login = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
+  const { state } = useLocation<ILoginLocation>();
 
   useEffect(() => {
     dispatch({ type: LOGIN_FORM_CLEAR_STATE });
@@ -30,12 +34,12 @@ function Login() {
     hasError,
   } = useSelector((store) => store.loginForm);
 
-  const onFormChange = (evt) => {
+  const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const input = evt.target;
     dispatch(setLoginFormValue({ field: input.name, value: input.value }));
   };
 
-  const onFormSubmit = (evt) => {
+  const onFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(login({ email, password }));
   };
@@ -86,6 +90,6 @@ function Login() {
       </div>
     </form>
   );
-}
+};
 
 export default Login;

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, FormEvent, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "../../types";
 import { Link, Redirect } from "react-router-dom";
 import {
   Input,
@@ -15,7 +15,7 @@ import { getStorageItem } from "../../utils/storage";
 import { refreshTokenKey } from "../../utils/constants";
 import styles from "./register.module.css";
 
-function Register() {
+const Register = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,12 +29,12 @@ function Register() {
     hasError,
   } = useSelector((store) => store.registerForm);
 
-  const onFormChange = (evt) => {
+  const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const input = evt.target;
     dispatch(setRegisterFormValue({ field: input.name, value: input.value }));
   };
 
-  const onFormSubmit = (evt) => {
+  const onFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(register({ email, password, name }));
   };

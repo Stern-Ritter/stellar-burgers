@@ -1,12 +1,19 @@
-import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import React, { useMemo, FunctionComponent } from "react";
+import { useSelector } from "../../types";
 import { useParams } from "react-router-dom";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
-import PropTypes from "prop-types";
 import styles from "./ingredient.module.css";
 
-function Ingredient({ type }) {
-  const { id } = useParams();
+interface IIngredientProps {
+  type?: string;
+}
+
+interface IIngredientParams {
+  id: string;
+}
+
+const Ingredient: FunctionComponent<IIngredientProps> = ({ type }) => {
+  const { id } = useParams<IIngredientParams>();
   const ingredientsData = useSelector((store) => store.ingredients.data);
 
   const selectedIngredient = useMemo(() => {
@@ -28,10 +35,6 @@ function Ingredient({ type }) {
         ))}
     </>
   );
-}
-
-Ingredient.propTypes = {
-  type: PropTypes.string,
 };
 
 export default Ingredient;

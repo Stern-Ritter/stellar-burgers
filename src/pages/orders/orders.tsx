@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Location } from "history";
+import { useDispatch, useSelector } from "../../types";
 import {
   Switch,
   Route,
@@ -14,14 +15,18 @@ import Modal from "../../components/modal/modal";
 import Loader from "../../components/loader/loader";
 import {
   wsAllOrdersConnectionStart,
-  wsAllOrdersConnectionClosing
+  wsAllOrdersConnectionClosing,
 } from "../../services/actions/all-orders";
 import styles from "./orders.module.css";
 
-function Orders() {
+interface IOrdersLocation {
+  order: Location;
+}
+
+const Orders = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<IOrdersLocation>();
   const { path } = useRouteMatch();
 
   useEffect(() => {
@@ -78,6 +83,6 @@ function Orders() {
       <Loader />
     </div>
   );
-}
+};
 
 export default Orders;

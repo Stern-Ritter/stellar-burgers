@@ -1,6 +1,15 @@
-export function socketMiddleware(wsUrl, wsActions) {
-  return (store) => {
-    let socket = null;
+import { Middleware, MiddlewareAPI } from "redux";
+import { RootState, AppDispatch } from "../../types";
+import { TWsAllOrdersActions } from "../actions/all-orders";
+import { TWsUserOrdersActions }  from '../actions/user-orders';
+
+type TWsActions =
+| TWsAllOrdersActions
+| TWsUserOrdersActions;
+
+export function socketMiddleware(wsUrl: string, wsActions: TWsActions): Middleware {
+  return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+    let socket: WebSocket | null = null;
 
     return (next) => (action) => {
       const { dispatch } = store;
@@ -17,7 +26,7 @@ export function socketMiddleware(wsUrl, wsActions) {
       }
 
       if (type === onClosing) {
-        socket.close(1000, "App closed");
+        socket?.close(1000, "App closed");
       }
 
       if (socket) {

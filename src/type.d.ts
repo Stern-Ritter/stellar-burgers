@@ -10,11 +10,12 @@ type TIngredient = {
   calories: number;
   price: number;
   image: string;
+  image_mobile: string;
   image_large: string;
 };
 
 type TIngredients = {
-  bun: TIngredient;
+  bun: TIngredient | null;
   main: Array<TIngredient>;
 };
 
@@ -23,7 +24,7 @@ type TOrder = {
   number: number;
   name: string;
   createdAt: string;
-  status: string;
+  status: 'created' | 'pending' | 'done';
   ingredients: Array<string>;
 };
 

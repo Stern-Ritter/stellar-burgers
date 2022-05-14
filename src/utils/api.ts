@@ -56,7 +56,7 @@ async function loginRequest(form: TLoginForm) {
   return data;
 }
 
-async function logoutRequest(token: string) {
+async function logoutRequest(token: string | undefined) {
   const res = await fetch(`${API}/auth/logout`, {
     method: "POST",
     body: JSON.stringify({ token }),
@@ -66,7 +66,7 @@ async function logoutRequest(token: string) {
   return data;
 }
 
-async function refreshTokenRequest(token: string) {
+async function refreshTokenRequest(token: string | undefined) {
   const res = await fetch(`${API}/auth/token `, {
     method: "POST",
     body: JSON.stringify({ token }),
@@ -76,7 +76,7 @@ async function refreshTokenRequest(token: string) {
   return data;
 }
 
-async function getUserRequest(token: string) {
+async function getUserRequest(token: string | undefined) {
   const res = await fetch(`${API}/auth/user `, {
     method: "GET",
     headers: {
@@ -88,7 +88,10 @@ async function getUserRequest(token: string) {
   return data;
 }
 
-async function updateUserRequest(form: TUpdateUserForm, token: string) {
+async function updateUserRequest(
+  form: TUpdateUserForm,
+  token: string | undefined
+) {
   const res = await fetch(`${API}/auth/user `, {
     method: "PATCH",
     body: JSON.stringify(form),
@@ -101,7 +104,10 @@ async function updateUserRequest(form: TUpdateUserForm, token: string) {
   return data;
 }
 
-async function postOrderRequest(ingredients: TIngredients, token: string) {
+async function postOrderRequest(
+  ingredients: TIngredients,
+  token: string | undefined
+) {
   const res = await fetch(`${API}/orders`, {
     method: "POST",
     body: JSON.stringify({

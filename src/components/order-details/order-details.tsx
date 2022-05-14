@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from "../../types";
 import styles from "./order-details.module.css";
 
-function OrderDetails() {
+const OrderDetails = () => {
   const { loading, hasError, data } = useSelector((store) => store.order);
 
   return (
@@ -18,7 +18,7 @@ function OrderDetails() {
       ) : (
         <>
           <p className={styles.id + " text text_type_digits-large mb-8"}>
-            {data.order.number}
+            {data?.order.number}
           </p>
           <h2 className="text text_type_main-medium mb-15">
             идентификатор заказа

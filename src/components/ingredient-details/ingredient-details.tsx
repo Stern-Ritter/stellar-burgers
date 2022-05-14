@@ -1,8 +1,13 @@
-import React from "react";
-import { dataPropTypes } from "../../utils/api.ts";
+import React, { FunctionComponent } from "react";
 import styles from "./ingredient-details.module.css";
 
-function IngredientDetails({ ingredient }) {
+interface IIngredientDetailsProps {
+  ingredient: TIngredient;
+}
+
+const IngredientDetails: FunctionComponent<IIngredientDetailsProps> = ({
+  ingredient,
+}) => {
   return (
     <div className={styles.details + " pl-10 pr-10 pb-15"}>
       <img
@@ -47,10 +52,6 @@ function IngredientDetails({ ingredient }) {
       </ul>
     </div>
   );
-}
-
-IngredientDetails.propTypes = {
-  ingredient: dataPropTypes.isRequired,
 };
 
 export default IngredientDetails;

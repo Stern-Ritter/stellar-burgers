@@ -1,15 +1,22 @@
-import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import React, { useMemo, FunctionComponent } from "react";
+import { useSelector } from "../../types";
 import { useParams } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { statuses } from "../../utils/constants";
 import toDateString from "../../utils/toDateString";
-import { orderPropTypes } from "../../utils/api.ts";
-import PropTypes from "prop-types";
 import styles from "./order-info.module.css";
 
-function OrderInfo({ orders, type }) {
-  const { id } = useParams();
+interface IOrderInfoProps {
+  orders: Array<TOrder>;
+  type?: string;
+}
+
+interface IOrderInfoParams {
+  id: string;
+}
+
+const OrderInfo: FunctionComponent<IOrderInfoProps> = ({ orders, type }) => {
+  const { id } = useParams<IOrderInfoParams>();
 
   const ingredientsData = useSelector((store) => store.ingredients.data);
 
@@ -19,6 +26,10 @@ function OrderInfo({ orders, type }) {
 
   const date = selectedOrder && toDateString(selectedOrder.createdAt);
   const displayedStatus = selectedOrder && statuses[selectedOrder.status];
+
+  function notUndefined<TValue>(value: TValue | undefined): value is TValue {
+    return value !== undefined;
+  }
 
   const mappedIngredients = useMemo(
     () =>
@@ -30,6 +41,7 @@ function OrderInfo({ orders, type }) {
                   (element) => element._id === ingredient
                 );
               })
+              .filter(notUndefined)
               .reduce((accIngredients, current) => {
                 accIngredients[current.name] = accIngredients[current.name]
                   ? {
@@ -38,7 +50,7 @@ function OrderInfo({ orders, type }) {
                     }
                   : { ...current, count: 1 };
                 return accIngredients;
-              }, {})
+              }, {} as Record<string, TIngredient & { count : number }>)
           ).sort((ingredient) => (ingredient.type === "bun" ? -1 : 1))
         : [],
     [selectedOrder, ingredientsData]
@@ -106,14 +118,7 @@ function OrderInfo({ orders, type }) {
         </div>
       </div>
     </div>
-  ) : (
-    null
-  );
-}
-
-OrderInfo.propTypes = {
-  orders: PropTypes.arrayOf(orderPropTypes).isRequired,
-  type: PropTypes.string,
+  ) : null;
 };
 
 export default OrderInfo;

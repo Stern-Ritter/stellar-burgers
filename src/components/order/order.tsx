@@ -1,19 +1,32 @@
-import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import React, { useMemo, FunctionComponent } from "react";
+import { useSelector } from "../../types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { statuses } from "../../utils/constants";
 import toDateString from "../../utils/toDateString";
-import { orderPropTypes } from "../../utils/api.ts";
-import PropTypes from "prop-types";
 import styles from "./order.module.css";
 
-function Order({ order, type, clickHandler }) {
+interface IOrderProps {
+  order: TOrder;
+  type: string;
+  clickHandler: (_id: string) => void;
+}
+
+const Order: FunctionComponent<IOrderProps> = ({
+  order,
+  type,
+  clickHandler,
+}) => {
   const { _id, number, name, createdAt, status, ingredients } = order;
 
   const ingredientsData = useSelector((store) => store.ingredients.data);
 
   const date = toDateString(createdAt);
   const displayedStatus = statuses[status];
+
+  function notUndefined<TValue>(value: TValue | undefined): value is TValue {
+    return value !== undefined;
+  }
+
   const mappedIngredients = useMemo(
     () =>
       ingredients.length && ingredientsData.length
@@ -24,7 +37,7 @@ function Order({ order, type, clickHandler }) {
                   (element) => element._id === ingredient
                 );
               })
-              .filter((ingredient) => ingredient !== undefined)
+              .filter(notUndefined)
               .reduce((accIngredients, current) => {
                 accIngredients[current.name] = accIngredients[current.name]
                   ? {
@@ -33,7 +46,7 @@ function Order({ order, type, clickHandler }) {
                     }
                   : { ...current, count: 1 };
                 return accIngredients;
-              }, {})
+              }, {} as Record<string, TIngredient & { count: number}>)
           ).sort((ingredient) => (ingredient.type === "bun" ? -1 : 1))
         : [],
     [ingredients, ingredientsData]
@@ -111,12 +124,6 @@ function Order({ order, type, clickHandler }) {
       </div>
     </div>
   );
-}
-
-Order.propTypes = {
-  order: orderPropTypes.isRequired,
-  type: PropTypes.string.isRequired,
-  clickHandler: PropTypes.func.isRequired,
 };
 
 export default Order;

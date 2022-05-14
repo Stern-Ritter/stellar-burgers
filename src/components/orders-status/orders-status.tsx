@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../types";
 import { maxOrdersStatusCount } from "../../utils/constants";
 import styles from "./orders-status.module.css";
 
-function OrdersStatus() {
+const OrdersStatus = () => {
   const orders = useSelector((store) => store.allOrders.orders);
   const total = useSelector((store) => store.allOrders.total);
   const totalToday = useSelector((store) => store.allOrders.totalToday);

@@ -1,39 +1,50 @@
-import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { useDrag, useDrop } from 'react-dnd';
+import React, { useRef, FunctionComponent } from "react";
+import { useDispatch } from "../../types";;
+import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { SHIFT_INGREDIENT } from '../../services/actions/burger-constructor'
-import { dataPropTypes } from '../../utils/api.ts'
-import PropTypes from "prop-types";
+import { SHIFT_INGREDIENT } from "../../services/actions/burger-constructor";
 import styles from "./burger-constructor-item.module.css";
 
-function BurgerConstructorItem({ ingredient, idx, handleClose }) {
+interface IBurgerConstructorItemProps {
+  ingredient: TIngredient;
+  idx: number;
+  handleClose: (idx: number) => void;
+}
+
+const BurgerConstructorItem: FunctionComponent<IBurgerConstructorItemProps> = ({
+  ingredient,
+  idx,
+  handleClose,
+}) => {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   const [, dragRef] = useDrag({
-    type: 'shiftedIngredient',
-    item: { idx }
+    type: "shiftedIngredient",
+    item: { idx },
   });
 
   const [, dropRef] = useDrop({
-    accept: 'shiftedIngredient',
-    hover: (item, monitor) => {
+    accept: "shiftedIngredient",
+    hover: (item, monitor: DropTargetMonitor<{idx: number}, HTMLLIElement>) => {
       const fromIndex = item.idx;
       const toIndex = idx;
-      const dragElementPointerY = monitor.getClientOffset().y;
-      const dropElementCoords = ref.current.getBoundingClientRect();
-      const dropElementCenterY = (dropElementCoords.top + dropElementCoords.bottom) / 2;
+      const dragElementPointerY = monitor.getClientOffset()?.y || 0;
+      const dropElementCoords = ref.current?.getBoundingClientRect() as DOMRect;
+      const dropElementCenterY =
+        (dropElementCoords.top + dropElementCoords.bottom) / 2;
 
-      if((fromIndex < toIndex && dragElementPointerY > dropElementCenterY)
-      || (fromIndex > toIndex && dragElementPointerY < dropElementCenterY)) {
+      if (
+        (fromIndex < toIndex && dragElementPointerY > dropElementCenterY) ||
+        (fromIndex > toIndex && dragElementPointerY < dropElementCenterY)
+      ) {
         dispatch({ type: SHIFT_INGREDIENT, fromIndex, toIndex });
         item.idx = toIndex;
       }
-    }
+    },
   });
 
   dropRef(dragRef(ref));
@@ -49,12 +60,6 @@ function BurgerConstructorItem({ ingredient, idx, handleClose }) {
       />
     </li>
   );
-}
-
-BurgerConstructorItem.propTypes = {
-  ingredient: dataPropTypes.isRequired,
-  idx: PropTypes.number.isRequired,
-  handleClose: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructorItem;

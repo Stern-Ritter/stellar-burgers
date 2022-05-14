@@ -1,8 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { FunctionComponent } from "react";
+import { ConnectDropTarget } from "react-dnd";
 import styles from "./burger-constructor-stub.module.css";
 
-function BurgerConstructorStub({ isHover, dropTarget }) {
+interface IBurgerConstructorStubProps {
+  isHover: boolean;
+  dropTarget: ConnectDropTarget;
+}
+
+const BurgerConstructorStub: FunctionComponent<IBurgerConstructorStubProps> = ({
+  isHover,
+  dropTarget,
+}) => {
   const containerClass = `${styles.constructor} ${
     isHover ? styles.onHover : ""
   }`;
@@ -14,11 +22,6 @@ function BurgerConstructorStub({ isHover, dropTarget }) {
       </p>
     </div>
   );
-}
-
-BurgerConstructorStub.propTypes = {
-  isHover: PropTypes.bool.isRequired,
-  dropTarget: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructorStub;

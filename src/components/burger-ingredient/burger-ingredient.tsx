@@ -1,20 +1,31 @@
-import React from 'react';
-import { useDrag } from 'react-dnd';
-import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { dataPropTypes } from '../../utils/api.ts'
-import PropTypes from "prop-types";
+import React, { FunctionComponent } from "react";
+import { useDrag } from "react-dnd";
+import {
+  CurrencyIcon,
+  Counter,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
 
-function BurgerIngredient({ ingredient, count, openHandler }) {
-  const [{isDrag}, dragRef] = useDrag({
-    type: 'ingredient',
+interface IBurgerIngredientProps {
+  ingredient: TIngredient;
+  count: number;
+  openHandler: (id: string) => void;
+}
+
+const BurgerIngredient: FunctionComponent<IBurgerIngredientProps> = ({
+  ingredient,
+  count,
+  openHandler,
+}) => {
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
     item: { id: ingredient._id, type: ingredient.type },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDrag: monitor.isDragging(),
-    })
+    }),
   });
 
-  return (!isDrag && (
+  return !isDrag ? (
     <li
       ref={dragRef}
       className={styles.ingredient}
@@ -30,17 +41,9 @@ function BurgerIngredient({ ingredient, count, openHandler }) {
         <CurrencyIcon type="primary" />
       </div>
       <p className="text text_type_main-default mb-6">{ingredient.name}</p>
-      { count && (
-      <Counter count={count} size="default" />
-      )}
+      {count && <Counter count={count} size="default" />}
     </li>
-  ));
-}
-
-BurgerIngredient.propTypes = {
-  ingredient: dataPropTypes.isRequired,
-  count: PropTypes.number,
-  openHandler: PropTypes.func.isRequired,
+  ) : null;
 };
 
 export default BurgerIngredient;

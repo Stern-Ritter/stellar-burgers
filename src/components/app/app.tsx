@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../types";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import { Location } from "history";
 import ProtectedRoute from "../protected-route/protected-route";
 import AppHeader from "../app-header/app-header";
 import Main from "../../pages/main/main";
@@ -15,10 +16,14 @@ import NotFound from "../../pages/not-found/not-found";
 import Modal from "../modal/modal";
 import { getIngredients } from "../../services/actions";
 
-function App() {
+interface IAppLocation {
+  background: Location
+}
+
+const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<IAppLocation>();
 
   useEffect(() => {
     dispatch(getIngredients());

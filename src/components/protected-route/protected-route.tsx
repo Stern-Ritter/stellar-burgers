@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route } from "react-router-dom";
+import React, { useState, useEffect, FunctionComponent } from "react";
+import { useDispatch, useSelector } from "../../types";
+import { Redirect, Route, RouteProps } from "react-router-dom";
 import { getUser } from "../../services/actions/user";
-import PropTypes from "prop-types";
 
-function ProtectedRoute({ children, ...rest }) {
+const ProtectedRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
   const dispatch = useDispatch();
   const [isUserLoaded, setUserLoaded] = useState(false);
   const { name, email } = useSelector((store) => store.user.data);
@@ -12,13 +11,13 @@ function ProtectedRoute({ children, ...rest }) {
   const init = async () => {
     await dispatch(getUser());
     setUserLoaded(true);
-  }
+  };
 
   useEffect(() => {
     init();
   }, [dispatch]);
 
-  if(!isUserLoaded) {
+  if (!isUserLoaded) {
     return null;
   }
 
@@ -31,18 +30,14 @@ function ProtectedRoute({ children, ...rest }) {
         ) : (
           <Redirect
             to={{
-              pathname: '/login',
-              state: { from: location }
+              pathname: "/login",
+              state: { from: location },
             }}
           />
         )
       }
     />
   );
-}
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.element.isRequired,
 };
 
 export default ProtectedRoute;

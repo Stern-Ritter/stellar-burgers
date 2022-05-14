@@ -1,11 +1,16 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { FunctionComponent } from "react";
+import { useDispatch } from "../../types";
 import { useHistory, NavLink } from "react-router-dom";
 import { logout } from "../../services/actions/user";
-import PropTypes from "prop-types";
 import styles from "./profile-navigation.module.css";
 
-function ProfileNavigation({ type }) {
+interface IProfileNavigationProps {
+  type: string;
+}
+
+const ProfileNavigation: FunctionComponent<IProfileNavigationProps> = ({
+  type,
+}) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -73,10 +78,6 @@ function ProfileNavigation({ type }) {
       </p>
     </div>
   );
-}
-
-ProfileNavigation.propTypes = {
-  type: PropTypes.string.isRequired,
 };
 
 export default ProfileNavigation;

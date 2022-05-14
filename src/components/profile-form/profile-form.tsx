@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useMemo, FormEvent, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "../../types";
 import {
   Input,
   Button,
@@ -11,7 +11,7 @@ import {
 } from "../../services/actions/user";
 import styles from "./profile-form.module.css";
 
-function ProfileForm() {
+const ProfileForm = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector((store) => store.user.data);
@@ -34,12 +34,12 @@ function ProfileForm() {
     );
   }, [userData, userForm]);
 
-  const onFormChange = (evt) => {
+  const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const input = evt.target;
     dispatch(setUpdateUserFormValue({ field: input.name, value: input.value }));
   };
 
-  const onFormSubmit = (evt) => {
+  const onFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(
       updateUser({

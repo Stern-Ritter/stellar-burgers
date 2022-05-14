@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../types";;
 import { useDrop } from "react-dnd";
 import { useHistory } from 'react-router-dom';
 import {
@@ -20,7 +20,7 @@ import { getStorageItem } from "../../utils/storage";
 import { refreshTokenKey } from "../../utils/constants";
 import styles from "./burger-constructor.module.css";
 
-function BurgerConstructor() {
+const BurgerConstructor = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -46,13 +46,17 @@ function BurgerConstructor() {
     [ingredientsData, ingredients]
   );
 
+  function notUndefined<TValue>(value: TValue | undefined): value is TValue {
+    return value !== undefined;
+  }
+
   const filteredMainIngredients = useMemo(
     () =>
       ingredients.main
         .map((id) =>
           ingredientsData.find((ingredient) => ingredient._id === id)
         )
-        .filter((element) => element !== undefined),
+        .filter(notUndefined),
     [ingredientsData, ingredients]
   );
 
@@ -84,7 +88,7 @@ function BurgerConstructor() {
     setVisibleModal(false);
   };
 
-  const deleteHandler = (idx) => {
+  const deleteHandler = (idx: number) => {
     dispatch({ type: REMOVE_INGREDIENT, idx });
   };
 

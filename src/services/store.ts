@@ -5,7 +5,7 @@ import { rootReducer } from "./reducers";
 import { socketMiddleware } from "./middleware/socketMiddleware";
 import { wsAllOrdersActions } from "./actions/all-orders";
 import { wsUserOrdersActions } from "./actions/user-orders";
-import { wsAllOrdersAPI, wsUserOrdersAPI } from "../utils/api.ts";
+import { wsAllOrdersAPI, wsUserOrdersAPI } from "../utils/api";
 
 const enhancer = composeEnhancers(
   applyMiddleware(

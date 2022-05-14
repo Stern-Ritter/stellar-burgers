@@ -1,19 +1,18 @@
+import { History } from "history";
 import {
   getUserRequest,
   updateUserRequest,
   refreshTokenRequest,
   logoutRequest,
-} from "../../utils/api.ts";
+} from "../../utils/api";
 import { getCookie, setCookie, deleteCookie } from "../../utils/cookies";
 import {
   getStorageItem,
   setStorageItem,
   removeStorageItem,
 } from "../../utils/storage";
-import {
-  accessTokenKey,
-  refreshTokenKey,
-} from "../../utils/constants";
+import { accessTokenKey, refreshTokenKey } from "../../utils/constants";
+import { AppDispatch, AppThunk } from "../../types";
 
 export const GET_USER = "GET_USER";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
@@ -29,7 +28,76 @@ export const LOGOUT = "LOGOUT";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
-export function setUpdateUserFormValue({ field, value }) {
+export interface IGetUser {
+  readonly type: typeof GET_USER;
+}
+
+export interface IGetUserSuccess {
+  readonly type: typeof GET_USER_SUCCESS;
+  readonly payload: Omit<TUpdateUserForm, "password">;
+}
+
+export interface IGetUserFailed {
+  readonly type: typeof GET_USER_FAILED;
+}
+
+export interface IUpdateUser {
+  readonly type: typeof UPDATE_USER;
+}
+
+export interface IUpdateUserSuccess {
+  readonly type: typeof UPDATE_USER_SUCCESS;
+  readonly payload: Omit<TUpdateUserForm, "password">;
+}
+
+export interface IUpdateUserFailed {
+  readonly type: typeof UPDATE_USER_FAILED;
+}
+
+export interface IUpdateUserFormSetValue {
+  readonly type: typeof UPDATE_USER_FORM_SET_VALUE;
+  readonly payload: {
+    readonly field: string;
+    readonly value: string;
+  };
+}
+
+export interface IUpdateUserFormClearState {
+  readonly type: typeof UPDATE_USER_FORM_CLEAR_STATE;
+}
+
+export interface ILogout {
+  readonly type: typeof LOGOUT;
+}
+
+export interface ILogoutSuccess {
+  readonly type: typeof LOGOUT_SUCCESS;
+}
+
+export interface ILogoutFailed {
+  readonly type: typeof LOGOUT_FAILED;
+}
+
+export type TUserActions =
+  | IGetUser
+  | IGetUserSuccess
+  | IGetUserFailed
+  | IUpdateUser
+  | IUpdateUserSuccess
+  | IUpdateUserFailed
+  | IUpdateUserFormSetValue
+  | IUpdateUserFormClearState
+  | ILogout
+  | ILogoutSuccess
+  | ILogoutFailed;
+
+export function setUpdateUserFormValue({
+  field,
+  value,
+}: {
+  field: string;
+  value: string;
+}): IUpdateUserFormSetValue {
   return {
     type: UPDATE_USER_FORM_SET_VALUE,
     payload: { field, value },
@@ -37,19 +105,19 @@ export function setUpdateUserFormValue({ field, value }) {
 }
 
 export async function refreshToken() {
-    const token = getStorageItem(refreshTokenKey);
-    const data = await refreshTokenRequest(token);
-    if (data?.success && data?.accessToken && data?.refreshToken) {
-      const accessToken = data.accessToken.split("Bearer ")[1];
-      const refreshToken = data.refreshToken;
-      deleteCookie(accessTokenKey);
-      setCookie(accessTokenKey, accessToken);
-      setStorageItem(refreshTokenKey, refreshToken);
-    }
+  const token = getStorageItem(refreshTokenKey);
+  const data = await refreshTokenRequest(token);
+  if (data?.success && data?.accessToken && data?.refreshToken) {
+    const accessToken = data.accessToken.split("Bearer ")[1];
+    const refreshToken = data.refreshToken;
+    deleteCookie(accessTokenKey);
+    setCookie(accessTokenKey, accessToken);
+    setStorageItem(refreshTokenKey, refreshToken);
+  }
 }
 
-export function getUser() {
-  return async function (dispatch) {
+export const getUser: AppThunk = () => {
+  return async function (dispatch: AppDispatch) {
     dispatch({ type: GET_USER });
     try {
       const token = getCookie(accessTokenKey);
@@ -78,8 +146,8 @@ export function getUser() {
   };
 }
 
-export function updateUser(form) {
-  return async function (dispatch) {
+export const updateUser: AppThunk = (form: TUpdateUserForm) => {
+  return async function (dispatch: AppDispatch) {
     dispatch({ type: UPDATE_USER });
     try {
       const token = getCookie(accessTokenKey);
@@ -108,8 +176,8 @@ export function updateUser(form) {
   };
 }
 
-export function logout(history) {
-  return async function (dispatch) {
+export const logout: AppThunk = (history: History) => {
+  return async function (dispatch: AppDispatch) {
     dispatch({ type: LOGOUT });
     try {
       const token = getStorageItem(refreshTokenKey);

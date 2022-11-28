@@ -25,7 +25,7 @@ Stellar Burgers — приложение космической бургерно
 
 **Github-pages**
 
-- [Ссылка на github-pages.](https://stern-ritter.github.io/react-burgers/)
+- [Ссылка на github-pages.](https://stern-ritter.github.io/stellar-burgers)
 
 ## Запуск проекта
 

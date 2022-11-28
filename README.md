@@ -23,10 +23,6 @@ Stellar Burgers — приложение космической бургерно
 - HTML,
 - CSS.
 
-**Github-pages**
-
-- [Ссылка на github-pages.](https://stern-ritter.github.io/stellar-burgers)
-
 ## Запуск проекта
 
 В папке проекта в терминале необходимо выполнить команды:
@@ -38,3 +34,7 @@ Stellar Burgers — приложение космической бургерно
 Запустится приложение в режиме разработки.
 
 Открыть [http://localhost:3000](http://localhost:3000), чтобы просмотреть приложение в браузере.
+
+**Github-pages**
+
+- [Ссылка на github-pages.](https://stern-ritter.github.io/stellar-burgers)
